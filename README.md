@@ -21,16 +21,17 @@ Kubernetes release optimizer built for DevOps, MLOps, SRE and data science teams
 
 ## Quick start
 
-This quick start example shows how to benchmark an HTTP service using Iter8.
+Install Iter8 CLI. [See here](https://iter8.tools/latest/getting-started/install) for more ways to install.
+
 ```shell
-# install Iter8 CLI
 brew tap iter8-tools/iter8
 brew install iter8
+```
 
-# launch experiment
+Benchmark an HTTP service.
+
+```shell
 iter8 launch -c load-test-http --set url=https://httpbin.org/get
-
-# view report
 iter8 report
 ```
 
@@ -43,7 +44,7 @@ iter8 report
 
     Grow your business with every release. Iter8 experiments can compare multiple versions based on business value and identify a winner.
 
-`Simple to use`
+`Use anywhere`
 
     Get started with Iter8 in seconds using pre-packaged experiment charts. Run Iter8 experiments locally, inside Kubernetes, or inside your CI/CD/GitOps pipelines.
 
