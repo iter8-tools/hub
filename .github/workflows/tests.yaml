@@ -60,9 +60,9 @@ jobs:
         iter8 gen -c . --set url=http://127.0.0.1/post \
                   --set payloadURL=https://cdn.pixabay.com/photo/2021/09/08/17/58/poppy-6607526_1280.jpg \
                   --set contentType="image/jpeg" \
-                  --set SLOs.latency-p25=80 \
-                  --set SLOs.latency-p50=100 \
-                  --set SLOs.latency-'p95\.0'=200
+                  --set SLOs.http/latency-p25=80 \
+                  --set SLOs.http/latency-p50=100 \
+                  --set SLOs.http/latency-'p95\.0'=200
         cat experiment.yaml
         iter8 run
         iter8 assert -c completed -c nofailure -c slos
@@ -91,21 +91,21 @@ jobs:
         cd grpc-go/examples/helloworld
         go build greeter_server/main.go
         ./main &
-        sleep 2
         
     - name: load test grpc service method
       run: |
         set -e
         cd charts/load-test-grpc
         export LOG_LEVEL=trace
-        iter8 gen -c . --set-string host="127.0.0.1:50051" \
-                  --set-string call="helloworld.Greeter.SayHello" \
-                  --set-string protoURL="https://raw.githubusercontent.com/grpc/grpc-go/master/examples/helloworld/helloworld/helloworld.proto" \
+        iter8 gen -c . --set host="127.0.0.1:50051" \
+                  --set call="helloworld.Greeter.SayHello" \
+                  --set connectTimeout="20s" \
+                  --set protoURL="https://raw.githubusercontent.com/grpc/grpc-go/master/examples/helloworld/helloworld/helloworld.proto" \
                   --set data.name="frodo" \
-                  --set SLOs.error-rate=0 \
-                  --set SLOs.latency/mean=50 \
-                  --set SLOs.latency/p90=100 \
-                  --set SLOs.latency/p'97\.5'=200
+                  --set SLOs.grpc/error-rate=0 \
+                  --set SLOs.grpc/latency/mean=50 \
+                  --set SLOs.grpc/latency/p90=100 \
+                  --set SLOs.grpc/latency/p'97\.5'=200
         echo "experiment ... "
         cat experiment.yaml
         iter8 run
