@@ -89,8 +89,10 @@ jobs:
       run: |
         git clone -b v1.43.0 https://github.com/grpc/grpc-go
         cd grpc-go/examples/helloworld
-        go run greeter_server/main.go &
-        
+        go build greeter_server/main.go
+        ./main &
+        sleep 2
+
     - name: load test grpc service method
       run: |
         set -e
@@ -98,7 +100,6 @@ jobs:
         export LOG_LEVEL=trace
         iter8 gen -c . --set host="127.0.0.1:50051" \
                   --set call="helloworld.Greeter.SayHello" \
-                  --set connectTimeout="20s" \
                   --set protoURL="https://raw.githubusercontent.com/grpc/grpc-go/master/examples/helloworld/helloworld/helloworld.proto" \
                   --set data.name="frodo" \
                   --set SLOs.grpc/error-rate=0 \
