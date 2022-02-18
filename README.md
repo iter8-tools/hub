@@ -10,14 +10,11 @@
 
 Kubernetes release optimizer built for DevOps, MLOps, SRE and data science teams.
 
->   - Safely rollout apps
->   - Maximize business value
->   - Use with any app/serverless/ML framework
->   - Simplify CI/CD/GitOps
-
 <p align='center'>
 <img alt-text="Iter8 experiment" src="https://iter8-tools.github.io/docs/0.9/images/iter8-intro-dark.png" width="70%" />
 </p>
+
+Iter8 experiments are designed to **safely rollout** apps, and **maximize business value** with each release. They can be used with **any** app/serverless/ML framework, and designed to **drastically simplify** CI/CD/GitOps.
 
 ## Quick start
 
