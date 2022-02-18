@@ -37,21 +37,22 @@ iter8 report
 ```
 
 ## Features at a glance
-`Load testing with SLOs`
 
-    Iter8 experiments can generate requests for HTTP and gRPC services, collect built-in latency and error-related metrics, and validate SLOs.
+* **Load testing with SLOs**
 
-`A/B(/n) testing`
+  Iter8 experiments can generate requests for HTTP and gRPC services, collect built-in latency and error-related metrics, and validate SLOs.
 
-    Grow your business with every release. Iter8 experiments can compare multiple versions based on business value and identify a winner.
+* **A/B(/n) testing**
 
-`Use anywhere`
+  Grow your business with every release. Iter8 experiments can compare multiple versions based on business value and identify a winner.
 
-    Get started with Iter8 in seconds using pre-packaged experiment charts. Run Iter8 experiments locally, inside Kubernetes, or inside your CI/CD/GitOps pipelines.
+* **Use anywhere**
 
-`App frameworks`
+  Get started with Iter8 in seconds using pre-packaged experiment charts. Run Iter8 experiments locally, inside Kubernetes, or inside your CI/CD/GitOps pipelines.
+
+* **App frameworks**
     
-    Use with any app, serverless, or ML framework. Iter8 works with Kubernetes deployments, statefulsets, Knative services, KServe/Seldon ML deployments, or other custom Kubernetes resource types.
+  Use with any app, serverless, or ML framework. Iter8 works with Kubernetes deployments, statefulsets, Knative services, KServe/Seldon ML deployments, or other custom Kubernetes resource types.
 
 ## Usage Examples
 1.  [Load test an HTTP service and validate SLOs](https://iter8.tools/0.8/getting-started/your-first-experiment/).
@@ -64,12 +65,12 @@ iter8 report
 ## Documentation
 Iter8 documentation is available at https://iter8.tools.
 
-## Implementation
-Iter8 is primarily written in `go` and builds on a few awesome open source projects including:
+## Credits
+Iter8 is primarily written in `Go` and builds on a few awesome open source projects including:
 
 - [Helm](https://helm.sh)
-- [Fortio](https://github.com/fortio/fortio)
 - [ghz](https://ghz.sh)
+- [Fortio](https://github.com/fortio/fortio)
 - [plotly.js](https://github.com/plotly/plotly.js)
 
 ## Contributing
