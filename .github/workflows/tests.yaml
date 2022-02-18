@@ -91,7 +91,6 @@ jobs:
         cd grpc-go/examples/helloworld
         go build greeter_server/main.go
         ./main &
-        sleep 2
 
     - name: load test grpc service method
       run: |
