@@ -102,6 +102,7 @@ jobs:
                   --set call="helloworld.Greeter.SayHello" \
                   --set protoURL="https://raw.githubusercontent.com/grpc/grpc-go/master/examples/helloworld/helloworld/helloworld.proto" \
                   --set data.name="frodo" \
+                  --set connectTimeout="20s" \
                   --set SLOs.grpc/error-rate=0 \
                   --set SLOs.grpc/latency/mean=50 \
                   --set SLOs.grpc/latency/p90=100 \
