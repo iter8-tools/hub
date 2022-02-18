@@ -89,7 +89,7 @@ jobs:
       run: |
         git clone -b v1.43.0 https://github.com/grpc/grpc-go
         cd grpc-go/examples/helloworld
-        go run greeter_server/main.go
+        go run greeter_server/main.go &
         
     - name: load test grpc service method
       run: |
