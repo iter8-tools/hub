@@ -46,9 +46,9 @@ jobs:
         set -e
         cd charts/load-test-http
         iter8 gen -c . --set url=http://127.0.0.1/get \
-                  --set SLOs.latency-p25=80 \
-                  --set SLOs.latency-p50=100 \
-                  --set SLOs.latency-'p95\.0'=200
+                  --set SLOs.http/latency-p25=80 \
+                  --set SLOs.http/latency-p50=100 \
+                  --set SLOs.http/latency-'p95\.0'=200
         cat experiment.yaml
         iter8 run
         iter8 assert -c completed -c nofailure -c slos
