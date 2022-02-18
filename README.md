@@ -8,13 +8,15 @@
 [![Slack channel](https://img.shields.io/badge/Slack-Join-purple)](https://join.slack.com/t/iter8-tools/shared_invite/zt-awl2se8i-L0pZCpuHntpPejxzLicbmw)
 [![Community meetups](https://img.shields.io/badge/meet-Iter8%20community%20meetups-brightgreen)](https://iter8.tools/0.8/getting-started/help/)
 
-Kubernetes release optimizer built for DevOps, MLOps, SRE and data science teams.
+> Kubernetes release optimizer built for DevOps, MLOps, SRE and data science teams.
 
 <p align='center'>
 <img alt-text="Iter8 experiment" src="https://iter8-tools.github.io/docs/0.9/images/iter8-intro-dark.png" width="70%" />
 </p>
 
-Iter8 experiments are designed to **safely rollout** apps, and **maximize business value** with each release. They can be used with **any** app/serverless/ML framework, and designed to **drastically simplify** CI/CD/GitOps.
+Iter8 experiments are designed to help you **safely rollout** apps, and **maximize business value** with each release. 
+
+Iter8 can be used with **any** app/serverless/ML framework, and **drastically simplifies** CI/CD/GitOps.
 
 ## Quick start
 
