@@ -14,11 +14,7 @@
 <img alt-text="Iter8 experiment" src="https://iter8-tools.github.io/docs/0.9/images/iter8-intro-dark.png" width="70%" />
 </p>
 
-> Safely rollout apps.
-
-> Maximize business value with each release.
-
-> Use with any app/serverless/ML framework.
+Use Iter8 experiments to safely rollout apps and ML models, and maximize business value with each release. Use with any app/serverless/ML framework.
 
 ## Quick start
 
