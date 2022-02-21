@@ -17,11 +17,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
     
-    - run: |
-        git clone https://github.com/sriumcp/iter8.git
-        cd iter8
-        git checkout initialv0.9
-        make install
+    - name: Install Iter8
+      run: |
+        wget -qO- https://github.com/iter8-tools/iter8/releases/download/v0.9.0/iter8-linux-amd64.tar.gz | tar xvz -
+        mv linux-amd64/iter8 /usr/local/bin
 
     - name: run httpbin
       run: |
@@ -79,11 +78,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
     
-    - run: |
-        git clone https://github.com/sriumcp/iter8.git
-        cd iter8
-        git checkout initialv0.9
-        make install
+    - name: Install Iter8
+      run: |
+        wget -qO- https://github.com/iter8-tools/iter8/releases/download/v0.9.0/iter8-linux-amd64.tar.gz | tar xvz -
+        mv linux-amd64/iter8 /usr/local/bin
 
     - name: run greeter
       run: |
