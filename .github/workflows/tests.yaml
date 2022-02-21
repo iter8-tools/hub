@@ -1,11 +1,11 @@
-name: tests
+name: integration tests
 
 on:
   pull_request:
   workflow_dispatch:
   
 jobs:
-  e2e-load-test-http:
+  integration-load-test-http:
     name: local httpbin tests
     runs-on: ubuntu-latest
     steps:
@@ -67,7 +67,7 @@ jobs:
         iter8 run
         iter8 assert -c completed -c nofailure -c slos
 
-  e2e-load-test-grpc:
+  integration-load-test-grpc:
     name: local grpc tests
     runs-on: ubuntu-latest
     steps:
