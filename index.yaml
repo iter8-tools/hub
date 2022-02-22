@@ -1,0 +1,59 @@
+apiVersion: v1
+entries:
+  load-test-grpc:
+  - apiVersion: v2
+    appVersion: v0.9
+    created: "2022-02-22T11:49:55.82462622Z"
+    description: Load test, benchmark, and validate gRPC
+    digest: 49324e1945e951166d32cd6c64e830dd5b9057f97890823b7db989ab242b9e9e
+    home: https://iter8.tools
+    icon: https://github.com/iter8-tools/iter8/raw/master/mkdocs/docs/images/favicon.png
+    keywords:
+    - Iter8
+    - gRPC
+    - load test
+    - benchmark
+    - validation
+    - SLOs
+    - metrics
+    - experiment
+    maintainers:
+    - email: spartha@us.ibm.com
+      name: Srinivasan Parthasarathy
+      url: https://researcher.watson.ibm.com/researcher/view.php?person=us-spartha
+    name: load-test-grpc
+    sources:
+    - https://github.com/iter8-tools/iter8
+    type: application
+    urls:
+    - https://github.com/iter8-tools/hub/releases/download/load-test-grpc-0.1.0/load-test-grpc-0.1.0.tgz
+    version: 0.1.0
+  load-test-http:
+  - apiVersion: v2
+    appVersion: v0.9
+    created: "2022-02-22T11:49:55.953336912Z"
+    description: Load test, benchmark, and validate HTTP
+    digest: e32077b4bfb2cd6f1ccec5b366ea3d92fe4f2be0545ea7e8976355977b9dd44f
+    home: https://iter8.tools
+    icon: https://github.com/iter8-tools/iter8/raw/master/mkdocs/docs/images/favicon.png
+    keywords:
+    - Iter8
+    - HTTP
+    - load test
+    - benchmark
+    - validation
+    - SLOs
+    - metrics
+    - experiment
+    maintainers:
+    - email: spartha@us.ibm.com
+      name: Srinivasan Parthasarathy
+      url: https://researcher.watson.ibm.com/researcher/view.php?person=us-spartha
+    name: load-test-http
+    sources:
+    - https://github.com/iter8-tools/iter8
+    type: application
+    urls:
+    - https://github.com/iter8-tools/hub/releases/download/load-test-http-0.1.0/load-test-http-0.1.0.tgz
+    version: 0.1.0
+generated: "2022-02-22T11:49:55.953341812Z"
