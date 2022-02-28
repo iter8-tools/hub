@@ -1,4 +1,4 @@
-name: integration tests
+name: integration tests for iter8lib
 
 on:
   pull_request:
