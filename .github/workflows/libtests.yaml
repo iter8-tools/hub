@@ -6,7 +6,7 @@ on:
   
 jobs:
   load-test-http:
-    name: local httpbin tests
+    name: local load-test-http
     runs-on: ubuntu-latest
     steps:
     - name: Install Go
@@ -76,7 +76,7 @@ jobs:
         iter8 assert -c completed -c nofailure -c slos
 
   load-test-grpc:
-    name: local grpc tests
+    name: local load-test-grpc
     runs-on: ubuntu-latest
     steps:
     - name: Install Go
@@ -123,7 +123,7 @@ jobs:
         iter8 assert -c completed -c nofailure -c slos
 
   k8s-job-load-test-http:
-    name: local httpbin tests
+    name: k8s load-test-http
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository

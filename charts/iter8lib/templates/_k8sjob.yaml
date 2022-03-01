@@ -1,8 +1,68 @@
 {{- define "iter8lib.k8sjob" -}}
 apiVersion: v1
-kind: ConfigMap
+kind: Secret
 metadata:
-  name: {{ .Release.Name }}-cfgmap
-data:
-{{- include "experiment" . | indent 2 }}
-{{- end -}}    
+  name: {{ .Release.Name }}-{{ .Release.Revision }}-spec
+stringData:
+  experiment.yaml: |
+{{- include "experiment" . | indent 4 }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ .Release.Name }}-{{ .Release.Revision }}-result
+stringData:
+  result: |
+    startTime: {{ now }}
+    numCompletedTasks: 0
+    failure: false
+    iter8Version: {{ .Chart.AppVersion }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-{{ .Release.Revision }}-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: iter8
+        image: iter8-tools/iter8:{{  trimPrefix "v" .Chart.AppVersion }}
+        imagePullPolicy: Always
+        volumeMounts:
+        - name: experiment-spec
+          mountPath: "/etc/foo"
+          readOnly: true        
+        command:
+        - "/bin/sh"
+        - "-c"
+        - iter8 k run --id {{ .Release.Name }}-{{ .Release.Revision }}
+      volumes:
+      - name: experiment-spec
+        secret:
+          secretName: {{ .Release.Name }}-{{ .Release.Revision }}-spec
+      restartPolicy: Never
+  backoffLimit: 0
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ .Release.Name }}-{{ .Release.Revision }}
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  resourceNames: ["{{ .Release.Name }}-{{ .Release.Revision }}-result"]
+  verbs: ["get", "list", "patch", "create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ .Release.Name }}-{{ .Release.Revision }}
+subjects:
+- kind: ServiceAccount
+  name: default
+roleRef:
+  kind: Role
+  name: {{ .Release.Name }}-{{ .Release.Revision }}
+  apiGroup: rbac.authorization.k8s.io
+{{- end -}}
