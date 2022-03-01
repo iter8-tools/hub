@@ -16,6 +16,11 @@ jobs:
 
     - name: Checkout repository
       uses: actions/checkout@v2
+
+
+    - uses: azure/setup-helm@v1
+      with:
+        version: '3.8.0'
     
     - name: Install Iter8
       run: |
@@ -36,6 +41,7 @@ jobs:
       run: |
         set -e
         cd testlibchart/load-test-http
+        helm dependency update .
         iter8 gen -c . --set url=http://127.0.0.1/get
         cat experiment.yaml
         iter8 run
@@ -45,6 +51,7 @@ jobs:
       run: |
         set -e
         cd testlibchart/load-test-http
+        helm dependency update .
         iter8 gen -c . --set url=http://127.0.0.1/get \
                   --set SLOs.http/latency-p25=80 \
                   --set SLOs.http/latency-p50=100 \
@@ -57,6 +64,7 @@ jobs:
       run: |
         set -e
         cd testlibchart/load-test-http
+        helm dependency update .
         iter8 gen -c . --set url=http://127.0.0.1/post \
                   --set payloadURL=https://cdn.pixabay.com/photo/2021/09/08/17/58/poppy-6607526_1280.jpg \
                   --set contentType="image/jpeg" \
@@ -96,6 +104,7 @@ jobs:
       run: |
         set -e
         cd testlibchart/load-test-grpc
+        helm dependency update .
         export LOG_LEVEL=trace
         iter8 gen -c . --set host="127.0.0.1:50051" \
                   --set call="helloworld.Greeter.SayHello" \
