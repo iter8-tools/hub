@@ -1,8 +1,9 @@
 {{- define "iter8lib.k8sjob" -}}
+{{- $name = printf "%s-%s" .Release.Name .Release.Revision -}}
 apiVersion: v1
 kind: Secret
 metadata:
-  name: {{ .Release.Name }}-{{ .Release.Revision }}-spec
+  name: {{ $name }}-spec
 stringData:
   experiment.yaml: |
 {{ include "experiment" . | indent 4 }}
@@ -10,9 +11,9 @@ stringData:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: {{ .Release.Name }}-{{ .Release.Revision }}-result
+  name: {{ $name }}-result
 stringData:
-  result: |
+  result.yaml: |
     startTime: {{ now }}
     numCompletedTasks: 0
     failure: false
@@ -21,7 +22,7 @@ stringData:
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ .Release.Name }}-{{ .Release.Revision }}-job
+  name: {{ $name }}-job
 spec:
   template:
     spec:
@@ -36,33 +37,33 @@ spec:
         command:
         - "/bin/sh"
         - "-c"
-        - iter8 k run --id {{ .Release.Name }}-{{ .Release.Revision }}
+        - iter8 k run --resultSecret {{ $name }}-result
       volumes:
       - name: experiment-spec
         secret:
-          secretName: {{ .Release.Name }}-{{ .Release.Revision }}-spec
+          secretName: {{ $name }}-spec
       restartPolicy: Never
   backoffLimit: 0
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: {{ .Release.Name }}-{{ .Release.Revision }}
+  name: {{ $name }}
 rules:
 - apiGroups: [""]
   resources: ["secrets"]
-  resourceNames: ["{{ .Release.Name }}-{{ .Release.Revision }}-result"]
+  resourceNames: ["{{ $name }}-result"]
   verbs: ["get", "list", "patch", "create"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: {{ .Release.Name }}-{{ .Release.Revision }}
+  name: {{ $name }}
 subjects:
 - kind: ServiceAccount
   name: default
 roleRef:
   kind: Role
-  name: {{ .Release.Name }}-{{ .Release.Revision }}
+  name: {{ $name }}
   apiGroup: rbac.authorization.k8s.io
 {{- end -}}
