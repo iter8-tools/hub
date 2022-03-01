@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   
 jobs:
-  integration-load-test-http:
+  load-test-http:
     name: local httpbin tests
     runs-on: ubuntu-latest
     steps:
@@ -75,7 +75,7 @@ jobs:
         iter8 run
         iter8 assert -c completed -c nofailure -c slos
 
-  integration-load-test-grpc:
+  load-test-grpc:
     name: local grpc tests
     runs-on: ubuntu-latest
     steps:
@@ -121,3 +121,21 @@ jobs:
         iter8 report
         echo "assert... "
         iter8 assert -c completed -c nofailure -c slos
+
+  k8s-job-load-test-http:
+    name: local httpbin tests
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - uses: azure/setup-helm@v1
+      with:
+        version: '3.8.0'
+    
+    - name: load test GET endpoint
+      run: |
+        set -e
+        cd testlibchart/load-test-http
+        helm dependency update .
+        helm template . --set url="https://iter8.tools"
