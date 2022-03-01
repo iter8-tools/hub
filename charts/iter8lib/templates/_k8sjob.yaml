@@ -1,5 +1,5 @@
 {{- define "iter8lib.k8sjob" -}}
-{{- $name = printf "%s-%s" .Release.Name .Release.Revision -}}
+{{- $name := printf "%s-%s" .Release.Name .Release.Revision -}}
 apiVersion: v1
 kind: Secret
 metadata:
