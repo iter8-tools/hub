@@ -37,7 +37,7 @@ spec:
         command:
         - "/bin/sh"
         - "-c"
-        - iter8 k run --resultSecret {{ $name }}-result
+        - iter8 k run --group {{ .Release.Name }} --revision {{ .Release.Revision }}
       volumes:
       - name: experiment-spec
         secret:
