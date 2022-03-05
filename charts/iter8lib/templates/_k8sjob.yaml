@@ -32,12 +32,14 @@ spec:
         imagePullPolicy: Always
         volumeMounts:
         - name: experiment-spec
-          mountPath: "/etc/foo"
+          mountPath: "/iter8exp"
           readOnly: true        
         command:
         - "/bin/sh"
         - "-c"
-        - iter8 k run --namespace {{ .Release.Namespace }} --group {{ .Release.Name }} --revision {{ .Release.Revision }}
+        - |
+          cd /iter8exp \
+          iter8 k run --namespace {{ .Release.Namespace }} --group {{ .Release.Name }} --revision {{ .Release.Revision }}
       volumes:
       - name: experiment-spec
         secret:
@@ -53,7 +55,7 @@ rules:
 - apiGroups: [""]
   resources: ["secrets"]
   resourceNames: ["{{ $name }}-result"]
-  verbs: ["get", "list", "patch", "create"]
+  verbs: ["get", "list", "patch", "update", "create"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
