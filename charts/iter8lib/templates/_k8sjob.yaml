@@ -8,17 +8,6 @@ stringData:
   experiment.yaml: |
 {{ include "experiment" . | indent 4 }}
 ---
-apiVersion: v1
-kind: Secret
-metadata:
-  name: {{ $name }}-result
-stringData:
-  result.yaml: |
-    startTime: {{ now }}
-    numCompletedTasks: 0
-    failure: false
-    iter8Version: {{ .Chart.AppVersion }}
----
 apiVersion: batch/v1
 kind: Job
 metadata:
