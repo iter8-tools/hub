@@ -1,4 +1,4 @@
 {{ define "experiment" -}}
-{{- include "iter8lib.http" . -}}
-{{- include "iter8lib.assess" . -}}
+{{- include "task.http" . -}}
+{{- include "task.assess" . -}}
 {{ end }}

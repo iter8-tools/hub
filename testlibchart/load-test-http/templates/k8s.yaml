@@ -1,1 +1,1 @@
-{{- include "iter8lib.k8sjob" . }}
+{{- include "k8s.manifest" . }}
