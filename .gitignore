@@ -9,7 +9,7 @@ Chart.lock
 # Iter8 binary and yamls and reports
 **/experiment.yaml
 **/result.yaml
-**/.report.html
+**/report.html
 **/ghz.proto
 **/ghz-call-data.json
 **/ghz-call-data.bin
