@@ -115,7 +115,7 @@ jobs:
       if: github.event_name == 'pull_request'
       run: |
         set -e
-        cd charts/load-test-http
+        cd charts/load-test-grpc
         helm dependency update .
 
     - name: unary benchmark with SLO validation
