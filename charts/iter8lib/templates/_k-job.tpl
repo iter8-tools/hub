@@ -1,5 +1,5 @@
 {{- define "k.job" -}}
-{{- include "k.common" -}}
+{{- $name := printf "%v-%v" .Release.Name .Release.Revision -}}
 apiVersion: batch/v1
 kind: Job
 metadata:

@@ -1,5 +1,5 @@
 {{- define "k.spec.role" -}}
-{{- include "k.common" -}}
+{{- $name := printf "%v-%v" .Release.Name .Release.Revision -}}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:

@@ -1,5 +1,5 @@
 {{- define "k.spec.secret" -}}
-{{- include "k.common" -}}
+{{- $name := printf "%v-%v" .Release.Name .Release.Revision -}}
 apiVersion: v1
 kind: Secret
 metadata:
