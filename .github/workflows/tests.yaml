@@ -33,11 +33,13 @@ jobs:
         done;
 
     - name: fix dependency
+      if: github.event_name == 'pull_request'
       uses: mikefarah/yq@master
       with:
-        cmd: yq -i '.dependencies[0].repository = "file://../iter8lib"' 'charts/load-test-http/Chart.yaml'        
+        cmd: yq -i '.dependencies[0].repository = "file://../iter8lib"' 'charts/load-test-http/Chart.yaml'
 
     - name: update dependency
+      if: github.event_name == 'pull_request'
       run: |
         set -e
         cd charts/load-test-http
@@ -105,10 +107,12 @@ jobs:
 
     - name: fix dependency
       uses: mikefarah/yq@master
+      if: github.event_name == 'pull_request'
       with:
         cmd: yq -i '.dependencies[0].repository = "file://../iter8lib"' 'charts/load-test-grpc/Chart.yaml'
 
     - name: update dependency
+      if: github.event_name == 'pull_request'
       run: |
         set -e
         cd charts/load-test-http
