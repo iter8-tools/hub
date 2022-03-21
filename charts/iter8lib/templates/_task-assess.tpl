@@ -1,4 +1,4 @@
-{{- define "iter8lib.assess" -}}
+{{- define "task.assess" -}}
 {{- if .Values.SLOs }}
 # task: validate service level objectives for app using
 # the metrics collected in an earlier task
@@ -10,5 +10,5 @@
       upperLimit: {{ $value | float64 }}
     {{- end }}
 {{- end }}
-{{- end -}}    
+{{- end -}}
 

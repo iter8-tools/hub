@@ -1,4 +1,4 @@
-{{- define "iter8lib.http" -}}
+{{- define "task.http" -}}
 # task: generate HTTP requests for application URL
 # collect Iter8's built-in HTTP latency and error-related metrics
 - task: gen-load-and-collect-metrics-http

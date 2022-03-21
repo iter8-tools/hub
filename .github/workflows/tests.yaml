@@ -5,8 +5,8 @@ on:
   workflow_dispatch:
   
 jobs:
-  integration-load-test-http:
-    name: local httpbin tests
+  local-http-tests:
+    name: local http tests
     runs-on: ubuntu-latest
     steps:
     - name: Install Go
@@ -19,7 +19,7 @@ jobs:
     
     - name: Install Iter8
       run: |
-        wget https://github.com/iter8-tools/iter8/releases/download/v0.9.0/iter8-linux-amd64.tar.gz
+        wget https://github.com/iter8-tools/iter8/releases/download/v0.9.3/iter8-linux-amd64.tar.gz
         tar -xvf iter8-linux-amd64.tar.gz
         mv linux-amd64/iter8 /usr/local/bin
 
@@ -32,20 +32,33 @@ jobs:
           sleep 5; 
         done;
 
-    - name: load test GET endpoint
+    - name: fix dependency
+      if: github.event_name == 'pull_request'
+      uses: mikefarah/yq@master
+      with:
+        cmd: yq -i '.dependencies[0].repository = "file://../iter8lib"' 'charts/load-test-http/Chart.yaml'
+
+    - name: update dependency
+      if: github.event_name == 'pull_request'
       run: |
         set -e
         cd charts/load-test-http
-        iter8 gen -c . --set url=http://127.0.0.1/get
+        helm dependency update .
+
+    - name: GET benchmark
+      run: |
+        set -e
+        cd charts/load-test-http
+        iter8 gen --sourceDir . --set url=http://127.0.0.1/get
         cat experiment.yaml
         iter8 run
         iter8 assert -c completed -c nofailure -c slos
 
-    - name: load test GET endpoint
+    - name: GET benchmark with SLO validation
       run: |
         set -e
         cd charts/load-test-http
-        iter8 gen -c . --set url=http://127.0.0.1/get \
+        iter8 gen --sourceDir . --set url=http://127.0.0.1/get \
                   --set SLOs.http/latency-p25=80 \
                   --set SLOs.http/latency-p50=100 \
                   --set SLOs.http/latency-'p95\.0'=200
@@ -53,11 +66,11 @@ jobs:
         iter8 run
         iter8 assert -c completed -c nofailure -c slos
 
-    - name: load test POST endpoint (image/jpeg)
+    - name: POST with payload; benchmark with SLO validation
       run: |
         set -e
         cd charts/load-test-http
-        iter8 gen -c . --set url=http://127.0.0.1/post \
+        iter8 gen --sourceDir . --set url=http://127.0.0.1/post \
                   --set payloadURL=https://cdn.pixabay.com/photo/2021/09/08/17/58/poppy-6607526_1280.jpg \
                   --set contentType="image/jpeg" \
                   --set SLOs.http/latency-p25=80 \
@@ -67,7 +80,7 @@ jobs:
         iter8 run
         iter8 assert -c completed -c nofailure -c slos
 
-  integration-load-test-grpc:
+  local-grpc-tests:
     name: local grpc tests
     runs-on: ubuntu-latest
     steps:
@@ -81,7 +94,7 @@ jobs:
     
     - name: Install Iter8
       run: |
-        wget https://github.com/iter8-tools/iter8/releases/download/v0.9.0/iter8-linux-amd64.tar.gz
+        wget https://github.com/iter8-tools/iter8/releases/download/v0.9.3/iter8-linux-amd64.tar.gz
         tar -xvf iter8-linux-amd64.tar.gz
         mv linux-amd64/iter8 /usr/local/bin
 
@@ -92,12 +105,25 @@ jobs:
         go build greeter_server/main.go
         ./main &
 
-    - name: load test grpc service method
+    - name: fix dependency
+      uses: mikefarah/yq@master
+      if: github.event_name == 'pull_request'
+      with:
+        cmd: yq -i '.dependencies[0].repository = "file://../iter8lib"' 'charts/load-test-grpc/Chart.yaml'
+
+    - name: update dependency
+      if: github.event_name == 'pull_request'
+      run: |
+        set -e
+        cd charts/load-test-grpc
+        helm dependency update .
+
+    - name: unary benchmark with SLO validation
       run: |
         set -e
         cd charts/load-test-grpc
         export LOG_LEVEL=trace
-        iter8 gen -c . --set host="127.0.0.1:50051" \
+        iter8 gen --sourceDir . --set host="127.0.0.1:50051" \
                   --set call="helloworld.Greeter.SayHello" \
                   --set protoURL="https://raw.githubusercontent.com/grpc/grpc-go/master/examples/helloworld/helloworld/helloworld.proto" \
                   --set data.name="frodo" \
