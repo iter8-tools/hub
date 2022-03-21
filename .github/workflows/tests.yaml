@@ -5,8 +5,8 @@ on:
   workflow_dispatch:
   
 jobs:
-  integration-load-test-http:
-    name: local httpbin tests
+  local-http-tests:
+    name: local http tests
     runs-on: ubuntu-latest
     steps:
     - name: Install Go
@@ -32,7 +32,18 @@ jobs:
           sleep 5; 
         done;
 
-    - name: load test GET endpoint
+    - name: fix dependency
+      uses: mikefarah/yq@master
+      with:
+        cmd: yq -i '.dependencies[0].repository = "file://../iter8lib"' 'charts/load-test-http/Chart.yaml'        
+
+    - name: update dependency
+      run: |
+        set -e
+        cd charts/load-test-http
+        helm dependency update .
+
+    - name: GET benchmark
       run: |
         set -e
         cd charts/load-test-http
@@ -41,7 +52,7 @@ jobs:
         iter8 run
         iter8 assert -c completed -c nofailure -c slos
 
-    - name: load test GET endpoint
+    - name: GET benchmark with SLO validation
       run: |
         set -e
         cd charts/load-test-http
@@ -53,7 +64,7 @@ jobs:
         iter8 run
         iter8 assert -c completed -c nofailure -c slos
 
-    - name: load test POST endpoint (image/jpeg)
+    - name: POST with payload; benchmark with SLO validation
       run: |
         set -e
         cd charts/load-test-http
@@ -67,7 +78,7 @@ jobs:
         iter8 run
         iter8 assert -c completed -c nofailure -c slos
 
-  integration-load-test-grpc:
+  local-grpc-tests:
     name: local grpc tests
     runs-on: ubuntu-latest
     steps:
@@ -92,7 +103,18 @@ jobs:
         go build greeter_server/main.go
         ./main &
 
-    - name: load test grpc service method
+    - name: fix dependency
+      uses: mikefarah/yq@master
+      with:
+        cmd: yq -i '.dependencies[0].repository = "file://../iter8lib"' 'charts/load-test-grpc/Chart.yaml'
+
+    - name: update dependency
+      run: |
+        set -e
+        cd charts/load-test-http
+        helm dependency update .
+
+    - name: unary benchmark with SLO validation
       run: |
         set -e
         cd charts/load-test-grpc
