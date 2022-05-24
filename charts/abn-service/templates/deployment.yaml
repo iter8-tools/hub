@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment
+  labels:
+    app: iter8-abn
+  annotations:
+    iter8.tools/revision: {{ .Release.Revision | quote }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iter8-abn
+  template:
+    metadata:
+      labels:
+        app: iter8-abn
+    spec:
+      containers:
+      - name: iter8-abn
+        image: {{ .Values.image }}
+        {{- if .Values.serviceaccount }}
+        serviceAccountName: {{ .Values.serviceaccount }}     ### VERIFY location
+        {{- end }}
+        env:
+        - name: WATCHER_CONFIG
+          value: /opt/iter8/abn-config.yaml
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: {{ .Release.Name }}-store
+          mountPath: "/opt/iter8"
+          readOnly: true
+      volumes:
+      - name: abn-store
+        configMap:
+          name: {{ .Release.Name }}-store

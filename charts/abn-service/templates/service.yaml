@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-service
+  annotations:
+    iter8.tools/revision: {{ .Release.Revision | quote }}
+spec:
+  selector:
+    app: iter8-abn
+  ports:
+  - port: 80
