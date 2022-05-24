@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-store
+  annotations: 
+    iter8.tools/revision: {{ .Release.Revision | quote }}
+data:
+  abn-config.yaml: | 
+    resources: 
+    {{- range $r := .Values.resources }}
+    {{- if eq $r "deployments" }}
+    - group: apps
+      version: v1
+      resources: deployments
+    {{- end }}
+    {{- if eq $r "services" }}
+    - version: v1
+      resources: services
+    {{- end }}
+    {{- end }}
+    namespaces:
+{{ toYaml .Values.namespaces | indent 4 }}

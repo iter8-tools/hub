@@ -1,0 +1,40 @@
+
+{{- range $ns := .Values.namespaces }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ $.Release.Name }}-watch-resources
+  namespace: {{ $ns }}
+  annotations: 
+    iter8.tools/revision: {{ $.Release.Revision | quote }}
+rules:
+{{- range $r := $.Values.resources }}
+{{- if eq $r "deployments" }}
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list"]
+{{- end }}
+{{- if eq $r "services" }}
+- apiGroups: [""]
+  resources: ["services"]
+  verbs: ["get", "list"]
+{{- end }}
+{{- end }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ $.Release.Name }}-watch-resources
+  namespace: {{ $ns }}
+  annotations: 
+    iter8.tools/revision: {{ $.Release.Revision | quote }}
+subjects:
+- kind: ServiceAccount
+  name: {{ $.Values.serviceaccount | default "default" | quote }}
+  namespace: {{ $.Release.Namespace }}
+roleRef:
+  kind: Role
+  name: {{ $.Release.Name }}-watch-resources
+  apiGroup: rbac.authorization.k8s.io
+{{- end }}
