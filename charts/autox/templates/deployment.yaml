@@ -3,20 +3,26 @@ kind: Deployment
 metadata:
   name: {{ .Release.Name }}
 spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Release.Name }}
   template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ .Release.Name }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
-      metadata:
-        annotations:
-          checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}    
       serviceAccountName: {{ .Release.Name }} 
       containers:
       - name: {{ .Release.Name }}
         image: {{ .Values.autoxImage }}
-      volumeMounts:
+        volumeMounts:
+        - name: triggers
+          mountPath: "/config"
+          readOnly: true
+      volumes:
       - name: triggers
-        mountPath: "/autox"
-        readOnly: true
-    volumes:
-    - name: triggers
-      configMap:
-        name: {{ .Release.Name }}
+        configMap:
+          name: {{ .Release.Name }}
