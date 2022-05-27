@@ -1,15 +1,2 @@
-### groups  Iter8 experiment groups managed by autox
-groups: # by default, there are no groups
-# specify a group as follows; you can specify multiple in the map below
-# in the map, the key is the name of the group
-  # hello:
-  #   chart: load-test-http
-  #   resourceKind: deployment
-  #   namespaces:
-  #   - test
-  #   - prod
-  #   values:
-  #     url: http://httpbin/get
-
-### autoxImage  Docker image to be used for auto launching experiments
 autoxImage: iter8/autox:0.10
+triggers: []

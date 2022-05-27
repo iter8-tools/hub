@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}
+stringData:
+  triggers.yaml: |
+{{- .Values.triggers | indent 4 }}

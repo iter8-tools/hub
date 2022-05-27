@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  template:
+    spec:
+      metadata:
+        annotations:
+          checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}    
+      serviceAccountName: {{ .Release.Name }} 
+      containers:
+      - name: {{ .Release.Name }}
+        image: {{ .Values.autoxImage }}
+      volumeMounts:
+      - name: triggers
+        mountPath: "/autox"
+        readOnly: true
+    volumes:
+    - name: triggers
+      configMap:
+        name: {{ .Release.Name }}
