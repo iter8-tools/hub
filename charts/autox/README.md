@@ -1,41 +1,63 @@
-**Is your feature request related to a problem? Please describe.**
-AutoX is the much discussed Iter8 feature which launches experiments automatically in Kubernetes when new versions of Kubernetes resources are created. Design and develop this feature.
+# Autox: Automatically trigger Iter8 experiments
+Autox is an Iter8 feature that launches experiments automatically in Kubernetes when new versions of Kubernetes resources are created. The following is an **example** of how autox can be used. This is intended to set up autox to kick start `load-test-http` experiments based on deployment triggers.
 
-**Describe the solution you'd like**
-AutoX controller should be installable as follows.
+## 1.a Create experiment group config
+
+Configure the experiment group in Kubernetes in preparation for autox. Be sure to supply the autox release name and autox release namespace (to be discussed below). This step does not start an experiment... it prepares the ground for autox to launch experiments in this group in the future. This includes creating the experiment spec  secret.
 
 ```shell
-helm install autox iter8/autox \
---set groups.<group name>.chart=<name of iter8 experiment chart> \
---set groups.<group name>.resourceKind=deployment \
---set groups.<group name>.namespaces={a,list,of,namespaces} \
---set groups.<group name>.values.x=y \
---set groups.<group name>.values.x=y \
-...
+iter8 k install -c load-test-http -g hello -n test \
+--set url=http://httpbin.test/get \
+--set autox.releaseName=autoxslos \
+--set autox.releaseNamespace=default
 ```
-In the above syntax, `x=y` are the parameter values you would set when launching the experiment using `iter8 k launch`.
 
-Following is an **example** of how the above  solution can be used. Set up autox to kick start a `load-test-http` experiment whenever there are changes deployments with an iter8-specific group annotation.
+## 1.b Delete experiment group config
+This step undoes 1.a.
 
-The following command installs the autox controller. In this example, the autox controller operators in the `default`, `test`, and `prod` namespaces. Note that `default` is the `helm` release namespace for `autox`, and hence, it is not necessary to specify it explicitly as part of `namespaces`.
 ```shell
-helm install autox iter8/autox \
---set groups.hello.chart=load-test-http \
---set groups.hello.resourceKind=deployment \
---set groups.hello.namespaces={test,prod} \
---set groups.hello.values.url=http://httpbin/get
+iter8 k delete -g hello -n test
 ```
 
-The following creates a deployment with the right annotation, in order to trigger an experiment.
+## 2.a Install autox
+
+The following command installs the autox controller. In this example, the autox controller is installed in the `default` (Helm release) namespace, but automates experiments in the `test` namespace. The name of the autox release is `autoxslos`.
 ```shell
-kubectl create deployment nginx --image=nginx
-kubectl annotate deploy/nginx iter8.tools/group=hello
+helm install autoxslos iter8/autox \
+--set triggers[0].namespace=test \
+--set triggers[0].kind=deployment
 ```
 
-A few seconds later ... you can view the report for the auto launched experiment using familiar `iter8` commands.
+### 2.b Uninstall autox
+Use `helm uninstall`. This step undoes 2.a.
+
+## 3. Trigger experiment
+The following creates a deployment with the right annotation, in order to trigger the experiment.
 ```shell
-iter8 k report -g hello
+kubectl create deployment nginx --image=nginx -n test
+kubectl annotate deploy/nginx iter8.tools/group=hello -n test
 ```
 
+Steps 1.a, 2.a, and 3 are all required to auto trigger an experiment.
 
-Should automatically trigger an `http-load-test` for the `new-sevice`.
+## 4. Report experiment results
+
+A few seconds later, you can view the report for the auto launched experiment using familiar `iter8` commands.
+```shell
+iter8 k report -g hello -n test
+```
+
+## 5. Automatically remove an autox experiment (`autox-unlaunch`)
+```shell
+# notice the minus sign at the end of the annotation
+kubectl annotate deploy/nginx iter8.tools/group- -n test
+```
+
+## 6. Remove an experiment group from autox
+You can `helm upgrade` the autox release in Step 2, and follow this up with step 1.b
+
+***
+
+**Known limitations:** 
+1. The above interaction is not GitOps friendly. This is because of the use of `iter8` experiment charts instead of `helm` charts in steps 1.a and 1.b. We will revisit this question after an initial implementation of autox that accomplishes the above.
+2. What happens if the autox deployment restarts? In the MVP implementation, it will relaunch experiments in every experiment group for which the old trigger and new trigger have a different checksums. Eventually, we will also support [diffing customization](https://argo-cd.readthedocs.io/en/stable/user-guide/diffing/) like argo cd.
