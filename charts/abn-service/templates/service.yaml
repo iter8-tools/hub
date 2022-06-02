@@ -6,6 +6,6 @@ metadata:
     iter8.tools/revision: {{ .Release.Revision | quote }}
 spec:
   selector:
-    app: iter8-abn
+    app.kubernetes.io/name: {{ .Release.Name }}
   ports:
   - port: 80

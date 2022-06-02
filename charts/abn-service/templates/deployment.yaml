@@ -1,37 +1,39 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-deployment
+  name: {{ .Release.Name }}
   labels:
-    app: iter8-abn
+    app.kubernetes.io/name: {{ .Release.Name }}
   annotations:
     iter8.tools/revision: {{ .Release.Revision | quote }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: iter8-abn
+      app.kubernetes.io/name: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: iter8-abn
+        app.kubernetes.io/name: {{ .Release.Name }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
       containers:
       - name: iter8-abn
         image: {{ .Values.image }}
         {{- if .Values.serviceaccount }}
-        serviceAccountName: {{ .Values.serviceaccount }}     ### VERIFY location
+        serviceAccountName: {{ .Values.serviceaccount }}
         {{- end }}
         env:
         - name: WATCHER_CONFIG
-          value: /opt/iter8/abn-config.yaml
+          value: /config/abn-config.yaml
         ports:
         - containerPort: 80
         volumeMounts:
-        - name: {{ .Release.Name }}-store
-          mountPath: "/opt/iter8"
+        - name: abn-config
+          mountPath: "/config"
           readOnly: true
       volumes:
-      - name: abn-store
+      - name: abn-config
         configMap:
-          name: {{ .Release.Name }}-store
+          name: {{ .Release.Name }}
