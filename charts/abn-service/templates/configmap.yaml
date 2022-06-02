@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Release.Name }}-store
+  name: {{ .Release.Name }}
   annotations: 
     iter8.tools/revision: {{ .Release.Revision | quote }}
 data:
