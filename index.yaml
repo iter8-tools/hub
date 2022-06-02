@@ -1,5 +1,28 @@
 apiVersion: v1
 entries:
+  autox:
+  - apiVersion: v2
+    appVersion: v0.10
+    created: "2022-06-02T20:39:27.615072538Z"
+    description: Automatically launch Iter8 experiments in Kubernetes
+    digest: e31eb2a8e58ef2bfb1f8f8e351fccb8967780c77b4ec29b2c96adab9855146f9
+    home: https://iter8.tools
+    icon: https://github.com/iter8-tools/iter8/raw/master/mkdocs/docs/images/favicon.png
+    keywords:
+    - Iter8
+    - experiment
+    - auto launch
+    maintainers:
+    - email: spartha@us.ibm.com
+      name: Srinivasan Parthasarathy
+      url: https://researcher.watson.ibm.com/researcher/view.php?person=us-spartha
+    name: autox
+    sources:
+    - https://github.com/iter8-tools/iter8
+    type: application
+    urls:
+    - https://github.com/iter8-tools/hub/releases/download/autox-0.1.0/autox-0.1.0.tgz
+    version: 0.1.0
   iter8lib:
   - apiVersion: v2
     appVersion: v0.9
@@ -156,4 +179,4 @@ entries:
     urls:
     - https://github.com/iter8-tools/hub/releases/download/load-test-http-0.1.0/load-test-http-0.1.0.tgz
     version: 0.1.0
-generated: "2022-03-01T18:38:52.284581092Z"
+generated: "2022-06-02T20:39:27.615271336Z"
