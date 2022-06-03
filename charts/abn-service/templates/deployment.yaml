@@ -28,7 +28,7 @@ spec:
         - name: WATCHER_CONFIG
           value: /config/abn-config.yaml
         ports:
-        - containerPort: 80
+        - containerPort: 50051
         volumeMounts:
         - name: abn-config
           mountPath: "/config"
