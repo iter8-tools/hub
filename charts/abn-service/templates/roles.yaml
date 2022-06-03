@@ -13,12 +13,12 @@ rules:
 {{- if eq $r "deployments" }}
 - apiGroups: ["apps"]
   resources: ["deployments"]
-  verbs: ["watch"]
+  verbs: ["watch", "list"]
 {{- end }}
 {{- if eq $r "services" }}
 - apiGroups: [""]
   resources: ["services"]
-  verbs: ["watch"]
+  verbs: ["watch", "list"]
 {{- end }}
 {{- end }}
 ---
