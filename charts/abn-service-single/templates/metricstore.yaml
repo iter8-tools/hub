@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Secret
+metadata:
+{{- if not $.Values.application }}
+  {{- fail "please specify the application parameter" }}
+{{- end }}
+  name: {{ $.Values.application }}
+type: Opaque
+data:
+  initialized: dHJ1ZQ==
