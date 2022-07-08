@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.name | default .Release.Name }}
+  annotations:
+    iter8.tools/revision: {{ .Release.Revision | quote }}
+spec:
+  selector:
+    app.kubernetes.io/name: {{ .Release.Name }}
+  ports:
+  - port: {{ .Values.service.port | default 50051 | int }}
