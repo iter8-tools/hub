@@ -25,6 +25,23 @@ entries:
     version: 0.1.0
   iter8:
   - apiVersion: v2
+    created: "2022-07-21T14:15:15.616138118Z"
+    description: Iter8 experiment library chart
+    digest: 39d9b59c4d5fc4b76532bfe140f84e1c5fcdbe0685c315c853c3216babff0d6a
+    home: https://iter8.tools
+    icon: https://github.com/iter8-tools/iter8/raw/master/mkdocs/docs/images/favicon.png
+    maintainers:
+    - email: spartha@us.ibm.com
+      name: Srinivasan Parthasarathy
+      url: https://researcher.watson.ibm.com/researcher/view.php?person=us-spartha
+    name: iter8
+    sources:
+    - https://github.com/iter8-tools/iter8
+    type: application
+    urls:
+    - https://github.com/iter8-tools/hub/releases/download/iter8-0.11.1/iter8-0.11.1.tgz
+    version: 0.11.1
+  - apiVersion: v2
     created: "2022-07-21T14:08:12.018241458Z"
     description: Iter8 experiment library chart
     digest: d274e6f58eda042db456e9621d5fb73a93a90e60be34ee0b41f06da657d1a091
@@ -42,6 +59,23 @@ entries:
     - https://github.com/iter8-tools/hub/releases/download/iter8-0.11.0/iter8-0.11.0.tgz
     version: 0.11.0
   iter8lib:
+  - apiVersion: v2
+    created: "2022-07-21T14:15:15.785320813Z"
+    description: Iter8 experiment library chart
+    digest: 1f56c723208faef6207f0e560cbc85adf28f48f4f1f3c82ca2cd9474cd6f45e6
+    home: https://iter8.tools
+    icon: https://github.com/iter8-tools/iter8/raw/master/mkdocs/docs/images/favicon.png
+    maintainers:
+    - email: spartha@us.ibm.com
+      name: Srinivasan Parthasarathy
+      url: https://researcher.watson.ibm.com/researcher/view.php?person=us-spartha
+    name: iter8lib
+    sources:
+    - https://github.com/iter8-tools/iter8
+    type: library
+    urls:
+    - https://github.com/iter8-tools/hub/releases/download/iter8lib-0.11.0/iter8lib-0.11.0.tgz
+    version: 0.11.0
   - apiVersion: v2
     appVersion: v0.9
     created: "2022-03-01T18:38:52.284276794Z"
@@ -197,4 +231,4 @@ entries:
     urls:
     - https://github.com/iter8-tools/hub/releases/download/load-test-http-0.1.0/load-test-http-0.1.0.tgz
     version: 0.1.0
-generated: "2022-07-21T14:08:12.018254858Z"
+generated: "2022-07-21T14:15:15.785338013Z"
