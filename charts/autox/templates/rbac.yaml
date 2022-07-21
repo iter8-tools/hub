@@ -1,34 +1,38 @@
-
-{{- range $trigger := .Values.triggers }}
+{{- range $group := .Values.groups }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: {{ $.Release.Name }}-watch-{{ $trigger.kind }}
-  namespace: {{ $trigger.namespace }}
+  name: {{ required "appName is required for each group" $group.appName }}-watch-{{ required $group.kind "kind is required for each group" }}
+  namespace: {{ required "namespace is required for each group" $group.namespace }}
 rules:
-{{- if eq $trigger.kind "deployment" }}
+{{- if eq $group.kind "deployment" }}
 - apiGroups: ["apps"]
   resources: ["deployments"]
-  verbs: ["watch"]
-{{- end }}
-{{- if eq $trigger.kind "service" }}
+  verbs: ["watch", "get"]
+{{- else if eq $group.kind "service" }}
 - apiGroups: [""]
   resources: ["services"]
-  verbs: ["watch"]
+  verbs: ["watch", "get"]
+{{- else if eq $group.kind "ksvc" }}
+- apiGroups: ["serving.knative.dev"]
+  resources: ["services"]
+  verbs: ["watch", "get"]
+{{- else  }}
+{{- fail "kind for each group must be one of deployment, service, or ksvc" }}
 {{- end }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: {{ $.Release.Name }}-watch-{{ $trigger.kind }}
-  namespace: {{ $trigger.namespace }}
+  name: {{ $group.appName }}-watch-{{ $group.kind }}
+  namespace: {{ $group.namespace }}
 subjects:
 - kind: ServiceAccount
   name: {{ $.Release.Name }}
   namespace: {{ $.Release.Namespace }}
 roleRef:
   kind: Role
-  name: {{ $.Release.Name }}-watch-{{ $trigger.kind }}
+  name: {{ $group.appName }}-watch-{{ $group.kind }}
   apiGroup: rbac.authorization.k8s.io
 {{- end }}

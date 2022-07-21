@@ -1,6 +1,6 @@
 apiVersion: v2
 name: autox
-version: 0.1.0
+version: 0.12.0
 description: Automatically launch Iter8 experiments in Kubernetes
 type: application
 keywords:
@@ -15,5 +15,8 @@ maintainers:
   email: spartha@us.ibm.com
   url: https://researcher.watson.ibm.com/researcher/view.php?person=us-spartha
 icon: https://github.com/iter8-tools/iter8/raw/master/mkdocs/docs/images/favicon.png
-appVersion: v0.10
-
+appVersion: v0.12
+dependencies:
+- name: iter8lib
+  version: 0.12.x
+  repository:  https://iter8-tools.github.io/hub/

@@ -1,0 +1,6 @@
+{{- range $group  := .Values.groups }}
+{{- $group.autox.name := $.Release.Name }}
+{{- $group.autox.namespace := $.Release.Namespace }}
+{{- include "k8s" $group }}
+---
+{{- end }}

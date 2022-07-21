@@ -12,17 +12,18 @@ spec:
       labels:
         app.kubernetes.io/name: {{ .Release.Name }}
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
     spec:
       serviceAccountName: {{ .Release.Name }} 
       containers:
       - name: {{ .Release.Name }}
         image: {{ .Values.autoxImage }}
+        command: ['iter8', 'autox', '-g', '/autox/groups.yaml']
         volumeMounts:
-        - name: triggers
-          mountPath: "/config"
+        - name: autox
+          mountPath: "/autox"
           readOnly: true
       volumes:
-      - name: triggers
-        configMap:
+      - name: autox
+        secret:
           name: {{ .Release.Name }}
