@@ -25,6 +25,27 @@ entries:
     version: 0.1.0
   iter8:
   - apiVersion: v2
+    created: "2022-07-21T14:17:48.561973814Z"
+    dependencies:
+    - name: iter8lib
+      repository: https://iter8-tools.github.io/hub/
+      version: 0.11.0
+    description: Iter8 experiment library chart
+    digest: 6a6404e757b4d353b1c78dbfde1861c6dedca426071a81324cbf3a78d0d159fe
+    home: https://iter8.tools
+    icon: https://github.com/iter8-tools/iter8/raw/master/mkdocs/docs/images/favicon.png
+    maintainers:
+    - email: spartha@us.ibm.com
+      name: Srinivasan Parthasarathy
+      url: https://researcher.watson.ibm.com/researcher/view.php?person=us-spartha
+    name: iter8
+    sources:
+    - https://github.com/iter8-tools/iter8
+    type: application
+    urls:
+    - https://github.com/iter8-tools/hub/releases/download/iter8-0.11.2/iter8-0.11.2.tgz
+    version: 0.11.2
+  - apiVersion: v2
     created: "2022-07-21T14:15:15.616138118Z"
     description: Iter8 experiment library chart
     digest: 39d9b59c4d5fc4b76532bfe140f84e1c5fcdbe0685c315c853c3216babff0d6a
@@ -231,4 +252,4 @@ entries:
     urls:
     - https://github.com/iter8-tools/hub/releases/download/load-test-http-0.1.0/load-test-http-0.1.0.tgz
     version: 0.1.0
-generated: "2022-07-21T14:15:15.785338013Z"
+generated: "2022-07-21T14:17:48.562001214Z"
