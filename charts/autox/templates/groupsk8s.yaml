@@ -1,4 +1,10 @@
-{{- range $group := .Values.groups }}
+{{- range $groupName, $group := .Values.groups }}
+{{- $_ := set $group "name" $groupName }}
+{{- $_ := set $group "autox" {} }}
+{{- $_ := set $group.autox "name" $.Release.Name }}
+{{- $_ := set $group.autox "namespace" $.Release.Namespace }}
+{{- $_ := set $group.autox "iter8lib" $.Values.iter8lib }}
+{{- include "k8s" $group }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -29,4 +35,5 @@ roleRef:
   kind: Role
   name: autox-{{ $group.app.name }}
   apiGroup: rbac.authorization.k8s.io
+---
 {{- end }}

@@ -2,32 +2,31 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: {{ .Release.Name }}-{{ .Release.Revision }}-cronjob
-  annotations:
-    iter8.tools/group: {{ .Release.Name }}
-    iter8.tools/revision: {{ .Release.Revision | quote }}
+  name: iter8-{{ required "app.name is required" .app.name }}
+  namespace: {{ required "app.namespace is required" .app.namespace }}
 spec:
-  schedule: {{ .Values.cronjobSchedule | quote }}
+  schedule: {{ .runner.schedule | quote }}
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
       template:
         metadata:
           labels:
-            iter8.tools/group: {{ .Release.Name }}
+            app.kubernetes.io/name: {{ .app.name }}
+            app.kubernetes.io/part-of: iter8
           annotations:
             sidecar.istio.io/inject: "false"
         spec:
-          serviceAccountName: {{ .Release.Name }}-iter8-sa
+          serviceAccountName: iter8-{{ .app.name }}
           containers:
           - name: iter8
-            image: {{ .Values.iter8Image }}
+            image: {{ .iter8lib.iter8Image }}
             imagePullPolicy: Always
             command:
             - "/bin/sh"
             - "-c"
             - |
-              iter8 k run --namespace {{ .Release.Namespace }} --group {{ .Release.Name }} -l {{ .Values.logLevel }} --reuseResult
+              iter8 k run --namespace {{ .app.namespace }} --group {{ .app.name }} -l {{ .iter8lib.logLevel }} --reuseResult
           restartPolicy: Never
       backoffLimit: 0
 {{- end }}
