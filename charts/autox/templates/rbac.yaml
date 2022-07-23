@@ -3,36 +3,30 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: {{ required "appName is required for each group" $group.appName }}-watch-{{ required $group.kind "kind is required for each group" }}
-  namespace: {{ required "namespace is required for each group" $group.namespace }}
+  name: autox-{{ required "app.name is required for each group" $group.app.name }}
+  namespace: {{ required "app.namespace is required for each group" $group.app.namespace }}
 rules:
-{{- if eq $group.kind "deployment" }}
 - apiGroups: ["apps"]
   resources: ["deployments"]
   verbs: ["watch", "get"]
-{{- else if eq $group.kind "service" }}
 - apiGroups: [""]
   resources: ["services"]
   verbs: ["watch", "get"]
-{{- else if eq $group.kind "ksvc" }}
 - apiGroups: ["serving.knative.dev"]
   resources: ["services"]
   verbs: ["watch", "get"]
-{{- else  }}
-{{- fail "kind for each group must be one of deployment, service, or ksvc" }}
-{{- end }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: {{ $group.appName }}-watch-{{ $group.kind }}
-  namespace: {{ $group.namespace }}
+  name: autox-{{ $group.app.name }}
+  namespace: {{ $group.app.namespace }}
 subjects:
 - kind: ServiceAccount
-  name: {{ $.Release.Name }}
+  name: autox-{{ $.Release.Name }}
   namespace: {{ $.Release.Namespace }}
 roleRef:
   kind: Role
-  name: {{ $group.appName }}-watch-{{ $group.kind }}
+  name: autox-{{ $group.app.name }}
   apiGroup: rbac.authorization.k8s.io
 {{- end }}

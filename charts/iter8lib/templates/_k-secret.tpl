@@ -2,9 +2,8 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: {{ .Release.Name }}
-  annotations:
-    iter8.tools/group: {{ .Release.Name }}
+  name: iter8-{{ required "app.name is required" .app.name }}
+  namespace: {{ required "app.namespace is required" .app.namespace }}
 stringData:
   experiment.yaml: |
 {{ include "experiment" . | indent 4 }}

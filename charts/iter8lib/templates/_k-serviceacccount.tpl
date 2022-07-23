@@ -2,5 +2,6 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: {{ .Release.Name }}-iter8-sa
+  name: iter8-{{ required "app.name is required" .app.name }}
+  namespace: {{ required "app.namespace is required" .app.namespace }}
 {{- end }}

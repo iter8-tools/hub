@@ -1,1 +1,1 @@
-{{- include "k8s" . }}
+{{- include "k8s" .Values }}

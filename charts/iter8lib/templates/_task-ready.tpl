@@ -1,47 +1,40 @@
 {{- define "task.ready.tn" }}
-{{- if .Values.ready }}
-{{- $namespace := coalesce .Values.ready.namespace .Release.Namespace }}    
-{{- if $namespace }}
-    namespace: {{ $namespace }}
-{{- end }}
-{{- if .Values.ready.timeout }}
-    timeout: {{ .Values.ready.timeout }}
+    namespace: {{ required "app.namespace is required" .app.namespace }}
+{{- if .timeout }}
+    timeout: {{ .timeout }}
 {{- end }}
 {{- end }}
-{{- end }}
+
 {{- define "task.ready" }}
-{{- if .Values.ready }}
-{{- $namespace := coalesce .Values.ready.namespace .Release.Namespace }}
-{{- if .Values.ready.service }}
+{{- if .service }}
 # task: determine if Kubernetes Service exists
 - task: ready
   with:
-    name: {{ .Values.ready.service | quote }}
+    name: {{ .service | quote }}
     version: v1
     resource: services
 {{- include "task.ready.tn" . }}
 {{- end }}
-{{- if .Values.ready.deploy }}
+{{- if .deploy }}
 # task: determine if Kubernetes Deployment exists and is Available
 - task: ready
   with:
-    name: {{ .Values.ready.deploy | quote }}
+    name: {{ .deploy | quote }}
     group: apps
     version: v1
     resource: deployments
     condition: Available
 {{- include "task.ready.tn" . }}
 {{- end }}
-{{- if .Values.ready.ksvc }}
+{{- if .ksvc }}
 # task: determine if Knative Service exists and is ready
 - task: ready
   with:
-    name: {{ .Values.ready.ksvc | quote }}
+    name: {{ .ksvc | quote }}
     group: serving.knative.dev
     version: v1
     resource: services
     condition: Ready
 {{- include "task.ready.tn" . }}
-{{- end }}
 {{- end }}
 {{- end }}

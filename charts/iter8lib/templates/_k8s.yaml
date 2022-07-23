@@ -7,13 +7,16 @@
 ---
 {{ include "k.rolebinding" . }}
 ---
-{{- if eq "job" .Values.runner }}
+{{- if eq "job" .runner.type }}
+{{- if .runner.create }}
 {{ include "k.job" . }}
-{{- else if eq "cronjob" .Values.runner }}
+{{- end }}
+{{- else if eq "cronjob" .runner.type }}
+{{- if .runner.create }}
 {{ include "k.cronjob" . }}
-{{- else if eq "none" .Values.runner }}
+{{- end }}
+{{- else if eq "none" .runner.type }}
 {{- else }}
 {{- fail "runner must be one of job, cronjob, or none" }}
 {{- end }}
 {{- end }}
-

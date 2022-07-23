@@ -1,6 +1,39 @@
-{{- range $group  := .Values.groups }}
-{{- $group.autox.name := $.Release.Name }}
-{{- $group.autox.namespace := $.Release.Namespace }}
+{{- range $groupName, $group := .Values.groups }}
+{{- $_ := set $group "name" $groupName }}
+{{- $_ := set $group "autox" {} }}
+{{- $_ := set $group.autox "name" $.Release.Name }}
+{{- $_ := set $group.autox "namespace" $.Release.Namespace }}
+{{- $_ := set $group.autox "iter8lib" $.Values.iter8lib }}
 {{- include "k8s" $group }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: autox-{{ required "app.name is required for each group" $group.app.name }}
+  namespace: {{ required "app.namespace is required for each group" $group.app.namespace }}
+rules:
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["watch", "get"]
+- apiGroups: [""]
+  resources: ["services"]
+  verbs: ["watch", "get"]
+- apiGroups: ["serving.knative.dev"]
+  resources: ["services"]
+  verbs: ["watch", "get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: autox-{{ $group.app.name }}
+  namespace: {{ $group.app.namespace }}
+subjects:
+- kind: ServiceAccount
+  name: autox-{{ $.Release.Name }}
+  namespace: {{ $.Release.Namespace }}
+roleRef:
+  kind: Role
+  name: autox-{{ $group.app.name }}
+  apiGroup: rbac.authorization.k8s.io
 ---
 {{- end }}

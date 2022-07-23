@@ -17,8 +17,8 @@ spec:
       serviceAccountName: {{ .Release.Name }} 
       containers:
       - name: {{ .Release.Name }}
-        image: {{ .Values.autoxImage }}
-        command: ['iter8', 'autox', '-g', '/autox/groups.yaml']
+        image: {{ .Values.iter8lib.iter8Image }}
+        command: ['iter8', 'autox', '--config', '/autox/apps.yaml']
         volumeMounts:
         - name: autox
           mountPath: "/autox"
