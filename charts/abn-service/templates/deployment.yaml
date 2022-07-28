@@ -24,11 +24,13 @@ spec:
       containers:
       - name: iter8-abn
         image: {{ .Values.image }}
+        command: ["/bin/iter8"]
+        args: ["abn"]
         env:
         - name: WATCHER_CONFIG
           value: /config/abn-config.yaml
         ports:
-        - containerPort: 50051
+        - containerPort: {{ .Values.service.port }}
         volumeMounts:
         - name: abn-config
           mountPath: "/config"
