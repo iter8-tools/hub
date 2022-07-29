@@ -4,9 +4,6 @@ image: iter8/iter8-abn:v0.11
 service: 
   port: 50051
 
-### serviceaccount for execution of service
-# serviceaccount: default
-
 ### comma separated list of resource types to watch
 ### valid types include:
 ###    deployments - apps.v1.deployments

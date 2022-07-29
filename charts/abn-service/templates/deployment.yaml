@@ -18,9 +18,7 @@ spec:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
-      {{- if .Values.serviceaccount }}
-      serviceAccountName: {{ .Values.serviceaccount }}
-      {{- end }}
+      serviceAccountName: {{ .Release.Name }}
       containers:
       - name: iter8-abn
         image: {{ .Values.image }}

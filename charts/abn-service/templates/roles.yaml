@@ -1,4 +1,3 @@
-
 {{- range $ns := .Values.namespaces }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -31,7 +30,7 @@ metadata:
     iter8.tools/revision: {{ $.Release.Revision | quote }}
 subjects:
 - kind: ServiceAccount
-  name: {{ $.Values.serviceaccount | default "default" | quote }}
+  name: {{ $.Release.Name }}
   namespace: {{ $.Release.Namespace }}
 roleRef:
   kind: Role
@@ -58,7 +57,7 @@ metadata:
     iter8.tools/revision: {{ $.Release.Revision | quote }}
 subjects:
 - kind: ServiceAccount
-  name: {{ $.Values.serviceaccount | default "default" | quote }}
+  name: {{ $.Release.Name }}
   namespace: {{ $.Release.Namespace }}
 roleRef:
   kind: Role
