@@ -10,7 +10,8 @@ spec:
       app.kubernetes.io/name: {{ template "iter8-abn.name" . }}
   template:
     metadata:
-{{ include "iter8-abn.labels" . | indent 6 }}
+      labels:
+        app.kubernetes.io/name: {{ template "iter8-abn.name" . }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
