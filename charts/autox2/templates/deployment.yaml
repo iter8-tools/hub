@@ -20,7 +20,7 @@ spec:
       - name: iter8-autox
         image: {{ .Values.image }}
         command: ["/bin/iter8"]
-        args: ["autox"]
+        args: ["autox", "-l", "{{ .Values.logLevel }}"]
         env:
         - name: WATCHER_CONFIG
           value: /config/autox-config.yaml
