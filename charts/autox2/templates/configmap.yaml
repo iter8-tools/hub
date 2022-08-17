@@ -2,20 +2,31 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}
-  {{ template "iter8-abn.labels" . }}
+  {{ template "iter8-autox.labels" . }}
 data:
-  abn-config.yaml: | 
+  resource-config.yaml: | 
     resources: 
     {{- range $r := .Values.resources }}
-    {{- if eq $r "deployments" }}
+    {{- if eq $r "deployment" }}
     - group: apps
       version: v1
-      resource: deployments
+      resource: deployment
     {{- end }}
-    {{- if eq $r "services" }}
+    {{- if eq $r "service" }}
     - version: v1
-      resource: services
+      resource: service
     {{- end }}
     {{- end }}
     namespaces:
 {{ toYaml .Values.namespaces | indent 4 }}
+  group-config.yaml: |
+    groups:
+      {{- range $name, $groups := .Values.groups }}
+      - {{ $name }}:
+          charts:
+          {{- range $g := $groups }}
+            - repo: {{ $g.repo }}
+              name: {{ $g.chartName }}
+              valuesFileURL: {{ $g.valuesFileURL }}
+          {{- end }}
+        {{- end }}

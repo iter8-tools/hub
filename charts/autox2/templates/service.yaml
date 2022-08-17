@@ -2,9 +2,9 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Release.Name }}
-  {{ template "iter8-abn.labels" . }}
+  {{ template "iter8-autox.labels" . }}
 spec:
   selector:
-    app.kubernetes.io/name: {{ template "iter8-abn.name" . }}
+    app.kubernetes.io/name: {{ template "iter8-autox.name" . }}
   ports:
   - port: {{ .Values.service.port }}
