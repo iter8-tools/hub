@@ -1,12 +1,11 @@
 apiVersion: v2
-name: iter8-abn
+name: iter8-autox
 version: 0.1.0
-description: Iter8 ABn support serivce
+description: Iter8 autoX support serivce
 type: application
 keywords:
 - Iter8
-- AB
-- ABn
+- autox
 - experiment
 home: https://iter8.tools
 sources:
