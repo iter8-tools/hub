@@ -22,8 +22,10 @@ spec:
         command: ["/bin/iter8"]
         args: ["autox", "-l", "{{ .Values.logLevel }}"]
         env:
-        - name: WATCHER_CONFIG
-          value: /config/autox-config.yaml
+        - name: RESOURCE_CONFIG
+          value: /config/resource-config.yaml
+        - name: GROUP_CONFIG
+          value: /config/group-config.yaml
         ports:
         - containerPort: {{ .Values.service.port }}
         volumeMounts:
