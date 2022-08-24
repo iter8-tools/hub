@@ -11,6 +11,6 @@
   with:
     url: {{ .url }}
     method: POST
-    payloadTemplateURL: {{ default "https://raw.githubusercontent.com/iter8-tools/hub/blob/main/charts/notify/_payload-slack.tpl" .payloadTemplateURL }}
+    payloadTemplateURL: {{ default "https://raw.githubusercontent.com/iter8-tools/hub/blob/main/templates/_payload-slack.tpl" .payloadTemplateURL }}
     softFailure: {{ default true .softFailure }}
 {{ end }} 
