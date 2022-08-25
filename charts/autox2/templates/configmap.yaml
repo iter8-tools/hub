@@ -24,13 +24,13 @@ data:
     {{- end }}
     namespaces:
 {{ toYaml .Values.namespaces | indent 4 }}
-  group-config.yaml: |
-    {{- range $name, $groups := .Values.groups }}
+  chart-group-config.yaml: |
+    {{- range $name, $chartGroups := .Values.chartGroups }}
     - name: {{ $name }}
       charts:
-      {{- range $g := $groups }}
-        - repo: {{ $g.repo }}
-          name: {{ $g.chartName }}
-          valuesFileURL: {{ $g.valuesFileURL }}
+      {{- range $cg := $chartGroups }}
+        - repo: {{ $cg.repo }}
+          name: {{ $cg.chartName }}
+          valuesFileURL: {{ $cg.valuesFileURL }}
       {{- end }}
     {{- end }}

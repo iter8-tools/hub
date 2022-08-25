@@ -24,10 +24,8 @@ spec:
         env:
         - name: RESOURCE_CONFIG
           value: /config/resource-config.yaml
-        - name: GROUP_CONFIG
+        - name: CHART_GROUP_CONFIG
           value: /config/group-config.yaml
-        ports:
-        - containerPort: {{ .Values.service.port }}
         volumeMounts:
         - name: autox-config
           mountPath: "/config"
