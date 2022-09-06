@@ -127,6 +127,29 @@ entries:
   iter8-autox:
   - apiVersion: v2
     appVersion: v0.12
+    created: "2022-09-06T14:39:53.67946905Z"
+    description: Iter8 autoX controller
+    digest: 030adce54903c16d3c50fd653625e38da4beb61eba749bd694aa954efe5267f7
+    home: https://iter8.tools
+    icon: https://github.com/iter8-tools/iter8/raw/master/mkdocs/docs/images/favicon.png
+    keywords:
+    - Iter8
+    - autox
+    - experiment
+    maintainers:
+    - email: alan.cha1@ibm.com
+      name: Alan Cha
+    - email: iter8-tools@gmail.com
+      name: Iter8
+    name: iter8-autox
+    sources:
+    - https://github.com/iter8-tools/iter8
+    type: application
+    urls:
+    - https://github.com/iter8-tools/hub/releases/download/iter8-autox-0.1.2/iter8-autox-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: v0.12
     created: "2022-08-30T14:56:38.261183464Z"
     description: Iter8 autoX controller
     digest: 59c548ea77f327993b877d890f4c213fde2cb642fb7041f3157921039e8534fb
@@ -372,4 +395,4 @@ entries:
     urls:
     - https://github.com/iter8-tools/hub/releases/download/load-test-http-0.1.0/load-test-http-0.1.0.tgz
     version: 0.1.0
-generated: "2022-08-30T14:56:38.261213565Z"
+generated: "2022-09-06T14:39:53.679514253Z"
