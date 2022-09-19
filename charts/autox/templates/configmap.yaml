@@ -4,7 +4,7 @@ metadata:
   name: {{ .Release.Name }}
   {{ template "iter8-autox.labels" . }}
 data:
-  resource-config.yaml: | 
+  resource-config.yaml: |
     resources: 
     {{- range $r := .Values.resources }}
     {{- if eq $r "deployments" }}
@@ -26,10 +26,11 @@ data:
 {{ toYaml .Values.namespaces | indent 4 }}
   chart-group-config.yaml: |
     {{- range $name, $chartGroups := .Values.chartGroups }}
-    - name: {{ $name }}
+    {{ $name }}:
       charts:
-      {{- range $cg := $chartGroups }}
-        - repo: {{ $cg.repo }}
+      {{- range $chartName, $cg := $chartGroups }}
+        {{ $chartName }}:
+          repo: {{ $cg.repo }}
           name: {{ $cg.chartName }}
           valuesFileURL: {{ $cg.valuesFileURL }}
       {{- end }}
