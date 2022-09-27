@@ -280,6 +280,30 @@ entries:
     urls:
     - https://github.com/iter8-tools/hub/releases/download/iter8lib-0.9.0/iter8lib-0.9.0.tgz
     version: 0.9.0
+  litmuschaos:
+  - apiVersion: v1
+    appVersion: 2.13.0
+    created: "2022-09-27T16:07:52.808809044Z"
+    description: A Helm chart to perform Litmus Chaos experiments
+    digest: fd83e93edd03f44d7497a15d84142b502f0acc6ff7c6800ba7cf6937780da8d6
+    home: https://litmuschaos.io
+    icon: https://raw.githubusercontent.com/litmuschaos/icons/master/litmus.png
+    keywords:
+    - chaos-engineering
+    - resiliency
+    - kubernetes
+    - pod
+    maintainers:
+    - email: shubham.chaudhary@harness.io
+      name: Shubham Chaudhary
+    - email: spartha@us.ibm.com
+      name: Srinivasan Parthasarathy
+    name: litmuschaos
+    sources:
+    - https://github.com/litmuschaos/litmus
+    urls:
+    - https://github.com/iter8-tools/hub/releases/download/litmuschaos-0.0.1/litmuschaos-0.0.1.tgz
+    version: 0.0.1
   load-test-grpc:
   - apiVersion: v2
     appVersion: v0.9
@@ -417,4 +441,4 @@ entries:
     urls:
     - https://github.com/iter8-tools/hub/releases/download/load-test-http-0.1.0/load-test-http-0.1.0.tgz
     version: 0.1.0
-generated: "2022-09-23T20:45:25.778580308Z"
+generated: "2022-09-27T16:07:52.809106144Z"
