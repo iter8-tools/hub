@@ -47,7 +47,7 @@ spec:
           - "update"
           - "delete"
           - "deletecollection"
-    image: "litmuschaos/go-runner:1.13.8"
+    image: "litmuschaos/go-runner:{{ .Chart.AppVersion }}"
     imagePullPolicy: Always
     args:
     - -c
