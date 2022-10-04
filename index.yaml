@@ -82,6 +82,28 @@ entries:
   iter8-abn:
   - apiVersion: v2
     appVersion: v0.11
+    created: "2022-10-04T14:46:37.840757193Z"
+    description: Iter8 ABn support serivce
+    digest: 17cc010d73038505814fe5ac300687c3bb26879ad2cbf4958ecf29754908c1a4
+    home: https://iter8.tools
+    icon: https://github.com/iter8-tools/iter8/raw/master/mkdocs/docs/images/favicon.png
+    keywords:
+    - Iter8
+    - AB
+    - ABn
+    - experiment
+    maintainers:
+    - email: iter8-tools@gmail.com
+      name: Iter8
+    name: iter8-abn
+    sources:
+    - https://github.com/iter8-tools/iter8
+    type: application
+    urls:
+    - https://github.com/iter8-tools/hub/releases/download/iter8-abn-0.1.3/iter8-abn-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: v0.11
     created: "2022-09-23T20:45:25.778432408Z"
     description: Iter8 ABn support serivce
     digest: 5cfd5386f8ce4b6c4f964a06a529cc11e76cfe6823b2e63a660e50e9ea1ebe43
@@ -441,4 +463,4 @@ entries:
     urls:
     - https://github.com/iter8-tools/hub/releases/download/load-test-http-0.1.0/load-test-http-0.1.0.tgz
     version: 0.1.0
-generated: "2022-09-27T16:07:52.809106144Z"
+generated: "2022-10-04T14:46:37.840919094Z"
