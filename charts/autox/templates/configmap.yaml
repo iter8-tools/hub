@@ -1,36 +1,35 @@
 apiVersion: v1
-kind: ConfigMap
+kind: Secret
 metadata:
   name: {{ .Release.Name }}
   {{ template "iter8-autox.labels" . }}
-data:
-  resource-config.yaml: | 
-    resources: 
-    {{- range $r := .Values.resources }}
-    {{- if eq $r "deployments" }}
-    - group: apps
-      version: v1
-      resource: deployments
-    {{- end }}
-    {{- if eq $r "services" }}
-    - version: v1
-      resource: services
-    {{- end }}
-    {{- if eq $r "ksvcs" }}
-    - group: serving.knative.dev
-      version: v1
-      resource: services
-    {{- end }}
-    {{- end }}
-    namespaces:
-{{ toYaml .Values.namespaces | indent 4 }}
+stringData:
   chart-group-config.yaml: |
-    {{- range $name, $chartGroups := .Values.chartGroups }}
-    - name: {{ $name }}
-      charts:
-      {{- range $cg := $chartGroups }}
-        - repo: {{ $cg.repo }}
-          name: {{ $cg.chartName }}
-          valuesFileURL: {{ $cg.valuesFileURL }}
-      {{- end }}
+    specs:
+    {{- range $name, $chartGroup := .Values.chartGroups }}
+      {{ $name }}:
+        trigger:
+          group: {{ $chartGroup.trigger.group }}
+          version: {{ $chartGroup.trigger.version }}
+          resource: {{ $chartGroup.trigger.resource }}
+          name: {{ $chartGroup.trigger.name }}
+          namespace: {{ $chartGroup.trigger.namespace }}
+        releaseSpecs:
+        {{- range $cg := $chartGroup.releaseSpecs }}
+          {{ $cg.chartID }}:
+            repoURL: {{ $cg.repoURL }}
+            name: {{ $cg.name }}
+            values: {{ $cg.values }}
+            version: {{ $cg.version }}
+        {{- end }}
     {{- end }}
+{{- range $name, $chartGroup := .Values.chartGroups }}
+{{ $hash := print $chartGroup | sha256sum | trunc 5 }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: autox-{{ $name }}-{{ $hash }}
+  labels:
+    iter8.tools/autox-group: {{ $name }}
+{{- end }}
