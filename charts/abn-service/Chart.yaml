@@ -1,7 +1,7 @@
 apiVersion: v2
 name: iter8-abn
 version: 0.1.4
-description: Iter8 ABn support serivce
+description: Iter8 ABn support service
 type: application
 keywords:
 - Iter8
