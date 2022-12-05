@@ -23,8 +23,8 @@ spec:
         command: ["/bin/iter8"]
         args: ["autox", "-l", "{{ .Values.logLevel }}"]
         env:
-        - name: RELEASE_GROUP_SPEC
-          value: /config/release-group-spec.yaml
+        - name: RELEASE_GROUP_SPECS
+          value: /config/release-group-specs.yaml
         volumeMounts:
         - name: autox-config
           mountPath: "/config"
