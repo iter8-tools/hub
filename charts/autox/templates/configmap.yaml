@@ -4,7 +4,7 @@ metadata:
   name: {{ .Release.Name }}
   {{ template "iter8-autox.labels" . }}
 stringData:
-  chart-group-config.yaml: |
+  release-group-spec.yaml: |
     specs:
     {{- range $releaseGroupSpecName, $releaseGroupSpec := .Values.releaseGroupSpecs }}
       {{ $releaseGroupSpecName }}:
