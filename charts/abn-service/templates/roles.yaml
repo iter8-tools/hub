@@ -1,28 +1,35 @@
-{{- range $ns := .Values.namespaces }}
+{{- range $ns, $apps := .Values.applications }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: {{ $.Release.Name }}-watch-resources
   namespace: {{ $ns }}
+  name: {{ $.Release.Name }}-watcher-resources
   {{ template "iter8-abn.labels" $ }}
 rules:
-{{- range $r := $.Values.resources }}
-{{- if eq $r "deployments" }}
-- apiGroups: ["apps"]
-  resources: ["deployments"]
-  verbs: ["watch", "list"]
-{{- end }}
-{{- if eq $r "services" }}
-- apiGroups: [""]
-  resources: ["services"]
-  verbs: ["watch", "list"]
-{{- end }}
-{{- if eq $r "ksvcs" }}
-- apiGroups: ["serving.knative.dev"]
-  resources: ["services"]
-  verbs: ["watch", "list"]
-{{- end }}
+{{- range $nm, $config := $apps }}
+  {{- range $r := $config.resources }}
+  {{- if eq $r "deployment" }}
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+  {{- else if eq $r "service" }}
+  - apiGroups: [""]
+    resources: ["services"]
+  {{- else if eq $r "ksvc"}}
+  - apiGroup: ["serving.knative.dev"]
+    resources: ["services"]
+  {{- else if eq $r "chaosengine" }}
+  - apiGroups: ["litmuschaos.io"]
+    resources: ["chaosengines"]
+  {{- end }}
+    verbs: ["watch", "list", "get", "update", "patch"]
+    resourceNames:
+    - {{ $nm }}
+    {{- $foo := untilStep 1 (int (add 1 (default 1 $config.maxNumCandidates))) 1 }}
+    {{- range $i, $v := $foo }}
+    - {{ $nm }}-candidate-{{ $v }}
+    {{- end }}
+  {{- end }}
 {{- end }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -39,22 +46,27 @@ roleRef:
   kind: Role
   name: {{ $.Release.Name }}-watch-resources
   apiGroup: rbac.authorization.k8s.io
-{{- end }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: {{ $.Release.Name }}-metricstore
+  name: {{ $.Release.Name }}-metrics
+  namespace: {{ $ns }}
   {{ template "iter8-abn.labels" $ }}
 rules:
 - apiGroups: [""]
   resources: ["secrets"]
-  verbs: ["create", "list", "get", "update", "patch"]
+  resourceNames:
+  {{- range $nm, $config := $apps }}
+  - {{ $nm }}-metrics
+  {{- end }}
+  verbs: ["list", "get", "update", "patch"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: {{ $.Release.Name }}-metricstore
+  name: {{ $.Release.Name }}-metrics
+  namespace: {{ $ns }}
   {{ template "iter8-abn.labels" $ }}
 subjects:
 - kind: ServiceAccount
@@ -62,5 +74,6 @@ subjects:
   namespace: {{ $.Release.Namespace }}
 roleRef:
   kind: Role
-  name: {{ $.Release.Name }}-metricstore
+  name: {{ $.Release.Name }}-metrics
   apiGroup: rbac.authorization.k8s.io
+{{- end }}
