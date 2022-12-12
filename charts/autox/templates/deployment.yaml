@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Release.Name }}
+  namespace: argocd
   {{ template "iter8-autox.labels" . }}
 spec:
   replicas: 1
@@ -32,4 +33,4 @@ spec:
       volumes:
       - name: autox-config
         secret:
-          name: {{ .Release.Name }}
+          secretName: {{ .Release.Name }}
