@@ -95,7 +95,7 @@ rules:
   {{- range $nm, $config := $apps }}
   - {{ $nm }}-metrics
   {{- end }}
-  verbs: ["list", "get", "update", "patch"]
+  verbs: ["get", "update"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
