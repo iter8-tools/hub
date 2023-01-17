@@ -27,38 +27,36 @@ roleRef:
   kind: Role
   name: {{ $.Release.Name }}-argocd
   apiGroup: rbac.authorization.k8s.io
-{{- range $ns := .Values.namespaces }}
+{{- range $releaseGroupSpecName, $releaseGroupSpec := .Values.releaseGroupSpecs }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: {{ $.Release.Name }}-watch-resources
-  namespace: {{ $ns }}
+  name: {{ $.Release.Name }}-{{ $releaseGroupSpecName }}
+  namespace: {{ $releaseGroupSpec.trigger.namespace }}
   {{ template "iter8-autox.labels" $ }}
 rules:
-{{- range $r := $.Values.resources }}
-{{- if eq $r "deployments" }}
+{{- if eq $releaseGroupSpec.trigger.resource "deployments" }}
 - apiGroups: ["apps"]
   resources: ["deployments"]
   verbs: ["watch", "list", "get"]
 {{- end }}
-{{- if eq $r "services" }}
+{{- if eq $releaseGroupSpec.trigger.resource "services" }}
 - apiGroups: [""]
   resources: ["services"]
   verbs: ["watch", "list", "get"]
 {{- end }}
-{{- if eq $r "ksvcs" }}
+{{- if eq $releaseGroupSpec.trigger.resource "ksvcs" }}
 - apiGroups: ["serving.knative.dev"]
   resources: ["services"]
   verbs: ["watch", "list", "get"]
-{{- end }}
 {{- end }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: {{ $.Release.Name }}-watch-resources
-  namespace: {{ $ns }}
+  name: {{ $.Release.Name }}-{{ $releaseGroupSpecName }}
+  namespace: {{ $releaseGroupSpec.trigger.namespace }}
   {{ template "iter8-autox.labels" $ }}
 subjects:
 - kind: ServiceAccount
@@ -66,6 +64,6 @@ subjects:
   namespace: argocd
 roleRef:
   kind: Role
-  name: {{ $.Release.Name }}-watch-resources
+  name: {{ $.Release.Name }}-{{ $releaseGroupSpecName }}
   apiGroup: rbac.authorization.k8s.io
 {{- end }}

@@ -18,7 +18,7 @@ stringData:
         releaseSpecs:
         {{- range $releaseSpecName, $releaseSpec := $releaseGroupSpec.releaseSpecs }}
           {{ $releaseSpecName }}:
-            repoURL: {{ $releaseSpec.repoURL }}
+            repoURL: {{ or $releaseSpec.repoURL "https://iter8-tools.github.io/hub/" }}
             name: {{ $releaseSpec.name }}
             values: 
               {{ toYaml $releaseSpec.values | indent 14 | trim }}
