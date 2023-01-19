@@ -25,6 +25,25 @@ entries:
     version: 0.1.0
   iter8:
   - apiVersion: v2
+    created: "2023-01-19T20:23:45.163424519Z"
+    description: Iter8 experiment chart
+    digest: cbc02b9322f713125641a4fd0f9ecb6c9900772fad108c87c322dca2732d2ca6
+    home: https://iter8.tools
+    icon: https://github.com/iter8-tools/iter8/raw/master/mkdocs/docs/images/favicon.png
+    maintainers:
+    - email: spartha@us.ibm.com
+      name: Srinivasan Parthasarathy
+      url: https://researcher.watson.ibm.com/researcher/view.php?person=us-spartha
+    - email: kalantar@us.ibm.com
+      name: Michael Kalantar
+    name: iter8
+    sources:
+    - https://github.com/iter8-tools/hub
+    type: application
+    urls:
+    - https://github.com/iter8-tools/hub/releases/download/iter8-0.13.0/iter8-0.13.0.tgz
+    version: 0.13.0
+  - apiVersion: v2
     created: "2022-11-22T03:36:28.186690811Z"
     description: Iter8 experiment chart
     digest: 04d5ca861c7ee75af4e364042c8ecb2fd0d5a4dd0d7d27b17f9ebc8917b23088
@@ -156,6 +175,28 @@ entries:
     - https://github.com/iter8-tools/hub/releases/download/iter8-0.11.0/iter8-0.11.0.tgz
     version: 0.11.0
   iter8-abn:
+  - apiVersion: v2
+    appVersion: v0.13
+    created: "2023-01-19T20:23:45.319338283Z"
+    description: Iter8 ABn support service
+    digest: b5a5673e6c93aad8de4632eb7dd2becb90c31a07756d5a9c9e5a6706ead689f4
+    home: https://iter8.tools
+    icon: https://github.com/iter8-tools/iter8/raw/master/mkdocs/docs/images/favicon.png
+    keywords:
+    - Iter8
+    - AB
+    - ABn
+    - experiment
+    maintainers:
+    - email: iter8-tools@gmail.com
+      name: Iter8
+    name: iter8-abn
+    sources:
+    - https://github.com/iter8-tools/iter8
+    type: application
+    urls:
+    - https://github.com/iter8-tools/hub/releases/download/iter8-abn-0.2.0/iter8-abn-0.2.0.tgz
+    version: 0.2.0
   - apiVersion: v2
     appVersion: v0.12
     created: "2022-11-29T18:00:38.443977944Z"
@@ -676,4 +717,4 @@ entries:
     urls:
     - https://github.com/iter8-tools/hub/releases/download/load-test-http-0.1.0/load-test-http-0.1.0.tgz
     version: 0.1.0
-generated: "2023-01-19T16:28:14.457053591Z"
+generated: "2023-01-19T20:23:45.47275786Z"
