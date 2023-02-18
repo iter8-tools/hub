@@ -68,29 +68,25 @@
 # task: download proto file from URL
 - run: |
     curl -o ghz.proto {{ $vals.protoURL }}
-{{- $pf := dict "proto" "ghz.proto" }}
-{{- $vals = mustMerge $pf $vals }}
+{{- $_ := set $vals "proto" "ghz.proto" }}
 {{- end }}
 {{- if $vals.dataURL }}
 # task: download JSON data file from URL
 - run: |
     curl -o data.json {{ $vals.dataURL }}
-{{- $pf := dict "data-file" "data.json" }}
-{{- $vals = mustMerge $pf $vals }}
+{{- $_ := set $vals "data-file" "data.json" }}
 {{- end }}
 {{- if $vals.binaryDataURL }}
 # task: download binary data file from URL
 - run: |
     curl -o data.bin {{ $vals.binaryDataURL }}
-{{- $pf := dict "binary-file" "data.bin" }}
-{{- $vals = mustMerge $pf $vals }}
+{{- $_ := set $vals "binary-file" "data.bin" }}
 {{- end }}
 {{- if $vals.metadataURL }}
 # task: download metadata JSON file from URL
 - run: |
     curl -o metadata.json {{ $vals.metadataURL }}
-{{- $pf := dict "metadata-file" "metadata.json" }}
-{{- $vals = mustMerge $pf $vals }}
+{{- $_ := set $vals "metadata-file" "metadata.json" }}
 {{- end }}
 # handle endpoints
 {{- range $endpointID, $endpoint := $vals.endpoints }}
