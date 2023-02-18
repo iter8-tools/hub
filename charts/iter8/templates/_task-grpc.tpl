@@ -92,31 +92,32 @@
 {{- $pf := dict "metadata-file" "metadata.json" }}
 {{- $vals = mustMerge $pf $vals }}
 {{- end }}
+# handle endpoints
 {{- range $endpointID, $endpoint := $vals.endpoints }}
 {{- if $endpoint.protoURL }}
 {{- $protoFile := print $endpointID "_ghz.proto" }}
-# task: download proto file from URL
+# task: download proto file from URL for endpoint
 - run: |
     curl -o $protoFile {{ $endpoint.protoURL }}
 {{- $_ := set $endpoint "proto" $protoFile }}
 {{- end }}
 {{- if $endpoint.dataURL }}
 {{- $dataFile := print $endpointID "_data.json" }}
-# task: download JSON data file from URL
+# task: download JSON data file from URL for endpoint
 - run: |
     curl -o $dataFile {{ $endpoint.dataURL }}
 {{- $_ := set $endpoint "data-file" $dataFile }}
 {{- end }}
 {{- if $endpoint.binaryDataURL }}
 {{- $binDataFile := print $endpointID "_data.bin" }}
-# task: download binary data file from URL
+# task: download binary data file from URL for endpoint
 - run: |
     curl -o $binDataFile {{ $endpoint.binaryDataURL }}
 {{- $_ := set $endpoint "binary-file" $binDataFile }}
 {{- end }}
 {{- if $endpoint.metadataURL }}
 {{- $metadataFile := print $endpointID "_metadata.json" }}
-# task: download metadata JSON file from URL
+# task: download metadata JSON file from URL for endpoint
 - run: |
     curl -o $metadataFile {{ $endpoint.metadataURL }}
 {{- $_ := set $endpoint "metadata-file" $metadataFile }}

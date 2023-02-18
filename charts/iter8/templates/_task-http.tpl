@@ -46,10 +46,11 @@
 {{- $pf := dict "payloadFile" "payload.dat" }}
 {{- $vals = mustMerge $pf $vals }}
 {{- end }}
+# handle endpoints
 {{- range $endpointID, $endpoint := $vals.endpoints }}
 {{- if $endpoint.payloadURL }}
 {{- $payloadFile := print $endpointID "_payload.dat" }}
-# task: download payload from payload URL
+# task: download payload from payload URL for endpoint
 - run: |
     curl -o {{ $payloadFile }} {{ $endpoint.payloadURL }}
 {{- $_ := set $endpoint "payloadFile" $payloadFile }}
