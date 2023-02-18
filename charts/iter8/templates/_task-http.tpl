@@ -3,8 +3,8 @@
 {{- if not . }}
 {{- fail "http values object is nil" }}
 {{- end }}
-{{- if not .url }}
-  {{- fail "please specify the url parameter" }}
+{{- if not (or .url .endpoints) }}
+  {{- fail "please specify the url parameter or the endpoints parameter" }}
 {{- end }}
 {{- /**************************/ -}}
 {{- if or .warmupNumRequests .warmupDuration }}
@@ -45,6 +45,15 @@
     curl -o payload.dat {{ $vals.payloadURL }}
 {{- $pf := dict "payloadFile" "payload.dat" }}
 {{- $vals = mustMerge $pf $vals }}
+{{- end }}
+{{- range $endpointID, $endpoint := $vals.endpoints }}
+{{- if $endpoint.payloadURL }}
+{{- $payloadFile := print $endpointID "_payload.dat" }}
+# task: download payload from payload URL
+- run: |
+    curl -o {{ $payloadFile }} {{ $endpoint.payloadURL }}
+{{- $_ := set $endpoint "payloadFile" $payloadFile }}
+{{- end }}
 {{- end }}
 {{/* Write the main task */}}
 # task: generate HTTP requests for app
