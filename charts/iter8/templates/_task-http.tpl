@@ -3,8 +3,17 @@
 {{- if not . }}
 {{- fail "http values object is nil" }}
 {{- end }}
-{{- if not (or .url .endpoints) }}
-  {{- fail "please specify the url parameter or the endpoints parameter" }}
+{{/* url must be defined or a url must be defined for each endpoint */}}
+{{- if not .url }}
+{{- if .endpoints }}
+{{- range $endpointID, $endpoint := .endpoints }}
+{{- if not $endpoint.url }}
+{{- fail (print "endpoint \"" (print $endpointID "\" does not have a url parameter")) }}
+{{- end }}
+{{- end }}
+{{- else }}
+{{- fail "please set the url parameter or the endpoints parameter" }}
+{{- end }}
 {{- end }}
 {{- /**************************/ -}}
 {{- if or .warmupNumRequests .warmupDuration }}

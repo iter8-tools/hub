@@ -3,11 +3,29 @@
 {{- if not . }}
 {{- fail "grpc values object is nil" }}
 {{- end }}
-{{- if not (or .host .endpoints) }}
-{{- fail "please the host parameter or the endpoints parameter" }}
+{{/* host must be defined or a host must be defined for each endpoint */}}
+{{- if not .host }}
+{{- if .endpoints }}
+{{- range $endpointID, $endpoint := .endpoints }}
+{{- if not $endpoint.host }}
+{{- fail (print "endpoint \"" (print $endpointID "\" does not have a host parameter")) }}
 {{- end }}
-{{- if not (or .call .endpoints) }}
-{{- fail "please the call parameter or the endpoints parameter" }}
+{{- end }}
+{{- else }}
+{{- fail "please set the host parameter or the endpoints parameter" }}
+{{- end }}
+{{- end }}
+{{/* call must be defined or a call must be defined for each endpoint */}}
+{{- if not .call }}
+{{- if .endpoints }}
+{{- range $endpointID, $endpoint := .endpoints }}
+{{- if not $endpoint.call }}
+{{- fail (print "endpoint \"" (print $endpointID "\" does not have a call parameter")) }}
+{{- end }}
+{{- end }}
+{{- else }}
+{{- fail "please set the call parameter or the endpoints parameter" }}
+{{- end }}
 {{- end }}
 {{- /**************************/ -}}
 {{- /* Warmup task if requested */ -}}
@@ -88,7 +106,6 @@
     curl -o metadata.json {{ $vals.metadataURL }}
 {{- $_ := set $vals "metadata-file" "metadata.json" }}
 {{- end }}
-# handle endpoints
 {{- range $endpointID, $endpoint := $vals.endpoints }}
 {{- if $endpoint.protoURL }}
 {{- $protoFile := print $endpointID "_ghz.proto" }}
