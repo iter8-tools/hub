@@ -22,8 +22,7 @@
 # task: download payload from payload URL
 - run: |
     curl -o payload.dat {{ $vals.payloadURL }}
-{{- $pf := dict "payloadFile" "payload.dat" }}
-{{- $vals = mustMerge $pf $vals }}
+{{- $_ := set $vals "payloadFile" "payload.dat" }}
 {{- end }}
 {{- /**************************/ -}}
 {{- /* Repeat above for each endpoint */ -}}
