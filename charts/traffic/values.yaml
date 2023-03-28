@@ -1,0 +1,4 @@
+### AutoX service image
+image: iter8/iter8:0.13
+
+logLevel: info
