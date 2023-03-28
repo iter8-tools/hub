@@ -20,4 +20,18 @@ spec:
         imagePullPolicy: Always
         command: ["/bin/iter8"]
         args: ["controllers", "-l", "{{ .Values.logLevel }}"]
-
+        env:
+        - name: PODNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: CONFIG_FILE
+          value: /config/config.yaml
+        volumeMounts:
+        - name: config
+          mountPath: "/config"
+          readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            name: {{ .Release.Name }}
