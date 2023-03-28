@@ -13,17 +13,58 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Example 1
-      - name: Get changed files
-        id: changed-files
+      # # Example 1
+      # - name: Get changed files
+      #   id: changed-files
+      #   uses: tj-actions/changed-files@v35
+      #   with:
+      #     since_last_remote_commit: true 
+
+      # - name: List all changed files
+      #   run: |
+      #     for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+      #       echo "$file was changed"
+      #     done
+
+      #     find charts -maxdepth 1 -mindepth 1 -type d
+
+      - name: Get modified files in the charts/abn folder
+        id: modified-files-abn
         uses: tj-actions/changed-files@v35
         with:
-          since_last_remote_commit: true 
+          files: charts/abn
 
-      - name: List all changed files
+      #  - name: Run step if any file(s) in the charts/abn folder was modified
+      #   if: steps.modified-files-abn.outputs.any_modified == 'true'
+      #   run: |
+      #     for file in ${{ steps.modified-files-abn.outputs.all_modified_files }}; do
+      #       echo "$file was modified"
+      #     done
+
+      - name: Run step if any file(s) in the charts/abn folder was modified
+        if: steps.modified-files-abn.outputs.any_modified == 'true'
         run: |
-          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            echo "$file was changed"
+          for file in ${{ steps.modified-files-abn.outputs.all_modified_files }}; do
+            echo "$file was modified"
           done
 
-          find charts -maxdepth 1 -mindepth 1 -type d
+          if [[ ${{ steps.modified-files-abn.outputs.all_modified_files }} == *"charts/abn/Chart.yaml"* ]]; then
+            echo "charts/abn/Chart.yaml has been modified"
+          fi
+
+      - name: Get modified files in the charts/autox folder
+        id: modified-files-autox
+        uses: tj-actions/changed-files@v35
+        with:
+          files: charts/autox
+
+      - name: Run step if any file(s) in the charts/autox folder was modified
+        if: steps.modified-files-autox.outputs.any_modified == 'true'
+        run: |
+          for file in ${{ steps.modified-files-autox.outputs.all_modified_files }}; do
+            echo "$file was modified"
+          done
+
+          if [[ ${{ steps.modified-files-autox.outputs.all_modified_files }} == *"charts/autox/Chart.yaml"* ]]; then
+            echo "charts/autox/Chart.yaml has been modified"
+          fi
