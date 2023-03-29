@@ -33,18 +33,18 @@ jobs:
           # Get git diff of main branch and PR branch
           gitDiff=$(git diff --name-only origin/main origin/${GITHUB_HEAD_REF})
 
-          echo "$diffFile"
+          echo "$gitDiff"
 
           # Deletion and addition in Chart.yaml
-          part1=$'--- a/'
-          part2=$'\n+++ b/'
-          diffFile="$part1$chartFile$part2$chartFile"
+          delete=$'--- a/'
+          add=$'\n+++ b/'
+          deleteAddChart="$delete$chartFile$add$chartFile"
 
           # Deletion and addition of version in Chart.yaml
           deleteVersion="-version:"
           addVersion="+version:"
 
-          if [[ "$gitDiff" == *"$diffFile"* ]] && [[ "$gitDiff" == *$deleteVersion* ]] && [[ "$gitDiff" == *$addVersion* ]]; 
+          if [[ "$gitDiff" == *"$deleteAddChart"* ]] && [[ "$gitDiff" == *$deleteVersion* ]] && [[ "$gitDiff" == *$addVersion* ]]; 
           then
             echo "version in $chartFile has been modified"
           else
