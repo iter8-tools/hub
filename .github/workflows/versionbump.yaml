@@ -4,15 +4,13 @@ on:
   pull_request:
     branches:
       - main
-      - ssa
-  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: [charts/abn, charts/autox, charts/iter8]
+        version: [charts/abn, charts/autox, charts/iter8, charts/litmuschaos, charts/traffic]
     name: Test changed-files
     steps:
       - uses: actions/checkout@v3
@@ -32,8 +30,6 @@ jobs:
 
           # Get git diff of main branch and PR branch
           gitDiff=$(git diff origin/main origin/${GITHUB_HEAD_REF})
-
-          echo "$gitDiff"
 
           # Deletion and addition in Chart.yaml
           delete=$'--- a/'
