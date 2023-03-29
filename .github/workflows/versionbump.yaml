@@ -6,7 +6,7 @@ on:
       - main
       - ssa
   workflow_dispatch:
-  
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,41 +19,33 @@ jobs:
         with:
           fetch-depth: 0
 
-      # # Example 1
-      # - name: Get changed files
-      #   id: changed-files
-      #   uses: tj-actions/changed-files@v35
-      #   with:
-      #     since_last_remote_commit: true 
-
-      # - name: List all changed files
-      #   run: |
-      #     for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-      #       echo "$file was changed"
-      #     done
-
-      #     find charts -maxdepth 1 -mindepth 1 -type d
-
       - name: Get modified files in the ${{ matrix.version }} folder
         id: modified-files
         uses: tj-actions/changed-files@v35
         with:
           files: ${{ matrix.version }}
 
-      #  - name: Run step if any file(s) in the ${{ matrix.version }} folder was modified
-      #   if: steps.modified-files.outputs.any_modified == 'true'
-      #   run: |
-      #     for file in ${{ steps.modified-files.outputs.all_modified_files }}; do
-      #       echo "$file was modified"
-      #     done
-
       - name: Run step if any file(s) in the ${{ matrix.version }} folder was modified
         if: steps.modified-files.outputs.any_modified == 'true'
         run: |
-          for file in ${{ steps.modified-files.outputs.all_modified_files }}; do
-            echo "$file was modified"
-          done
+          chartFile="${{ matrix.version }}/Chart.yaml"
 
-          if [[ ${{ steps.modified-files.outputs.all_modified_files }} == *"charts/abn/Chart.yaml"* ]]; then
-            echo "charts/abn/Chart.yaml has been modified"
+          # Get git diff of main branch and PR branch
+          gitDiff=$(git diff --name-only origin/main origin/${GITHUB_HEAD_REF})
+
+          # Deletion and addition in Chart.yaml
+          part1=$'--- a/'
+          part2=$'\n+++ b/'
+          diffFile="$part1$chartFile$part2$chartFile"
+
+          # Deletion and addition of version in Chart.yaml
+          deleteVersion="-version:"
+          addVersion="+version:"
+
+          if [[ "$gitDiff" == *"$diffFile"* ]] && [[ "$gitDiff" == *$deleteVersion* ]] && [[ "$gitDiff" == *$addVersion* ]]; 
+          then
+            echo "version in $chartFile has been modified"
+          else
+            echo "version in $chartFile needs to be modified"
+            exit 1
           fi
