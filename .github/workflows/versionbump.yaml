@@ -31,8 +31,6 @@ jobs:
           # Get git diff of main branch and PR branch
           gitDiff=$(git diff origin/main..HEAD)
 
-          echo "$gitDiff"
-
           # Deletion and addition in Chart.yaml
           delete=$'--- a/'
           add=$'\n+++ b/'
