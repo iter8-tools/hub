@@ -1,6 +1,10 @@
 ---
 apiVersion: rbac.authorization.k8s.io/v1
+{{- if .Values.clusterScoped }}
 kind: ClusterRole
+{{- else }}
+kind: Role
+{{- end }}
 metadata:
   name: {{ $.Release.Name }}-traffic
   {{ template "iter8-traffic.labels" $ }}
@@ -15,7 +19,11 @@ rules:
 {{- end }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
+{{- if .Values.clusterScoped }}
 kind: ClusterRoleBinding
+{{- else }}
+kind: RoleBinding
+{{- end }}
 metadata:
   name: {{ $.Release.Name }}-traffic
   {{ template "iter8-traffic.labels" $ }}

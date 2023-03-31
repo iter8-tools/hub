@@ -21,10 +21,14 @@ spec:
         command: ["/bin/iter8"]
         args: ["controllers", "-l", "{{ .Values.logLevel }}"]
         env:
-        - name: PODNAME
+        - name: POD_NAME
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
         volumeMounts:
         - name: config
           mountPath: "/config"
