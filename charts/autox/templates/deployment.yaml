@@ -30,6 +30,16 @@ spec:
         - name: autox-config
           mountPath: "/config"
           readOnly: true
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        securityContext:
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
       volumes:
       - name: autox-config
         secret:
