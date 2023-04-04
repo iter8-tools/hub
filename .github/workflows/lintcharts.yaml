@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: [charts/abn, charts/autox, charts/iter8, charts/litmuschaos]
+        version: [charts/abn, charts/autox, charts/iter8, charts/litmuschaos, charts/traffic]
     name: Test changed-files
     steps:
       - uses: actions/checkout@v3
