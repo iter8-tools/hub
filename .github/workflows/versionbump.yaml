@@ -28,8 +28,8 @@ jobs:
         run: |
           chartFile="${{ matrix.version }}/Chart.yaml"
 
-          # Get git diff of main branch and PR branch
-          gitDiff=$(git diff origin/main..HEAD)
+          # Get git diff of the Chart.yaml between the main branch and PR branch
+          gitDiff=$(git diff origin/main..HEAD $chartFile)
 
           # Deletion and addition in Chart.yaml
           delete=$'--- a/'
