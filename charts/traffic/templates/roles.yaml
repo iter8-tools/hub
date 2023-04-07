@@ -9,11 +9,11 @@ metadata:
   {{ template "iter8-traffic.labels" $ }}
 rules:
 {{- range $typeName, $type := .Values.resourceTypes }}
-{{- if not $type.resource }}
+{{- if not $type.Resource }}
 {{- fail (print "resourceType \"" (print $typeName "\" does not have a resource parameter")) }}
 {{- end }}
-- apiGroups: ["{{- $type.group -}}"]
-  resources: ["{{- $type.resource -}}"]
+- apiGroups: ["{{- $type.Group -}}"]
+  resources: ["{{- $type.Resource -}}"]
   verbs: ["get", "list", "watch", "patch", "update"]
 {{- end }}
 - apiGroups: [""]
