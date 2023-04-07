@@ -4,3 +4,6 @@ metadata:
   name: {{ .Release.Name }}
 spec:
   clusterIP: None
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ template "iter8-traffic.name" . }}
