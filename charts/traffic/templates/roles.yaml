@@ -35,6 +35,10 @@ subjects:
   name: {{ $.Release.Name }}
   namespace: {{ $.Release.Namespace }}
 roleRef:
+{{- if .Values.clusterScoped }}
+  kind: ClusterRole
+{{- else }}
   kind: Role
+{{- end }}
   name: {{ $.Release.Name }}-traffic
   apiGroup: rbac.authorization.k8s.io

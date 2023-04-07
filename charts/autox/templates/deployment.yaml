@@ -31,12 +31,7 @@ spec:
           mountPath: "/config"
           readOnly: true
         resources:
-          requests:
-            memory: "{{ .Values.requests.memory }}"
-            cpu: "{{ .Values.requests.cpu }}"
-          limits:
-            memory: "{{ .Values.limits.memory }}"
-            cpu: "{{ .Values.limits.cpu }}"
+          {{ toYaml .Values.resources | indent 10 | trim }}
         securityContext:
           readOnlyRootFilesystem: true
           runAsNonRoot: true
