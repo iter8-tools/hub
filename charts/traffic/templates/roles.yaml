@@ -17,6 +17,9 @@ rules:
   resources: ["{{- $type.resource -}}"]
   verbs: ["get", "list", "watch", "patch", "update"]
 {{- end }}
+- apiGroups: [""]
+  resources: ["events"]
+  verbs: ["get", "create"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 {{- if .Values.clusterScoped }}
