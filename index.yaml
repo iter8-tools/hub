@@ -3,6 +3,28 @@ entries:
   abn:
   - apiVersion: v2
     appVersion: v0.13
+    created: "2023-04-11T13:41:16.199151703Z"
+    description: Iter8 ABn support service
+    digest: feda67ffaf8bb98a23b7ef09c495921d6dcffe89d10cdb4e0b5e1311061230dc
+    home: https://iter8.tools
+    icon: https://github.com/iter8-tools/iter8/raw/master/mkdocs/docs/images/favicon.png
+    keywords:
+    - Iter8
+    - AB
+    - ABn
+    - experiment
+    maintainers:
+    - email: iter8-tools@gmail.com
+      name: Iter8
+    name: abn
+    sources:
+    - https://github.com/iter8-tools/iter8
+    type: application
+    urls:
+    - https://github.com/iter8-tools/hub/releases/download/abn-0.2.3/abn-0.2.3.tgz
+    version: 0.2.3
+  - apiVersion: v2
+    appVersion: v0.13
     created: "2023-01-26T02:18:59.791313725Z"
     description: Iter8 ABn support service
     digest: 5bcb85c0b93c5c3003ba386223f8116c1971ab0f7732f7f88c2be6e9bca3c54c
@@ -46,6 +68,29 @@ entries:
     - https://github.com/iter8-tools/hub/releases/download/abn-0.2.1/abn-0.2.1.tgz
     version: 0.2.1
   autox:
+  - apiVersion: v2
+    appVersion: v0.13
+    created: "2023-04-11T13:41:16.495694905Z"
+    description: Iter8 autoX controller
+    digest: c78b24c2d1c542c676bbafe176b7426c207a7712d5f4a2b7a43ed790bbf228d7
+    home: https://iter8.tools
+    icon: https://github.com/iter8-tools/iter8/raw/master/mkdocs/docs/images/favicon.png
+    keywords:
+    - Iter8
+    - autox
+    - experiment
+    maintainers:
+    - email: alan.cha1@ibm.com
+      name: Alan Cha
+    - email: iter8-tools@gmail.com
+      name: Iter8
+    name: autox
+    sources:
+    - https://github.com/iter8-tools/iter8
+    type: application
+    urls:
+    - https://github.com/iter8-tools/hub/releases/download/autox-0.1.7/autox-0.1.7.tgz
+    version: 0.1.7
   - apiVersion: v2
     appVersion: v0.13
     created: "2023-01-26T19:49:35.952754329Z"
@@ -115,6 +160,25 @@ entries:
     - https://github.com/iter8-tools/hub/releases/download/autox-0.1.0/autox-0.1.0.tgz
     version: 0.1.0
   iter8:
+  - apiVersion: v2
+    created: "2023-04-11T13:41:16.689043102Z"
+    description: Iter8 experiment chart
+    digest: 82c06eded822e2ac79f516895e0367cc000a5c10a29a14eb81fc1f0c6cdd944f
+    home: https://iter8.tools
+    icon: https://github.com/iter8-tools/iter8/raw/master/mkdocs/docs/images/favicon.png
+    maintainers:
+    - email: spartha@us.ibm.com
+      name: Srinivasan Parthasarathy
+      url: https://researcher.watson.ibm.com/researcher/view.php?person=us-spartha
+    - email: kalantar@us.ibm.com
+      name: Michael Kalantar
+    name: iter8
+    sources:
+    - https://github.com/iter8-tools/hub
+    type: application
+    urls:
+    - https://github.com/iter8-tools/hub/releases/download/iter8-0.13.6/iter8-0.13.6.tgz
+    version: 0.13.6
   - apiVersion: v2
     created: "2023-03-23T19:22:15.105163281Z"
     description: Iter8 experiment chart
@@ -903,4 +967,28 @@ entries:
     urls:
     - https://github.com/iter8-tools/hub/releases/download/load-test-http-0.1.0/load-test-http-0.1.0.tgz
     version: 0.1.0
-generated: "2023-03-23T19:22:15.10555051Z"
+  traffic:
+  - apiVersion: v2
+    appVersion: v0.13
+    created: "2023-04-11T13:41:16.86918268Z"
+    description: Iter8 traffic controller
+    digest: c36ea2e1fa11c04338bc4cd542a6bbe915a018fb013def2e9104e9ec0866a65c
+    home: https://iter8.tools
+    icon: https://github.com/iter8-tools/iter8/raw/master/mkdocs/docs/images/favicon.png
+    keywords:
+    - Iter8
+    - traffic
+    - experiment
+    maintainers:
+    - email: alan.cha1@ibm.com
+      name: Alan Cha
+    - email: iter8-tools@gmail.com
+      name: Iter8
+    name: traffic
+    sources:
+    - https://github.com/iter8-tools/iter8
+    type: application
+    urls:
+    - https://github.com/iter8-tools/hub/releases/download/traffic-0.1.0/traffic-0.1.0.tgz
+    version: 0.1.0
+generated: "2023-04-11T13:41:16.869603087Z"
