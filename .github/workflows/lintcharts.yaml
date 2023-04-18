@@ -6,11 +6,39 @@ on:
       - main
 
 jobs:
-  build:
+  # Get the paths for the Helm charts to lint
+  get_paths:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Get the paths for Helm charts to lint
+        id: set-matrix
+        run: |
+          # Get paths (in string form)
+          stringPaths=$(find -maxdepth 2 -path './charts/*')
+
+          # Serialize paths into JSON array
+          paths=$(jq -ncR '[inputs]' <<< "$stringPaths")
+
+          # echo "::set-output name=matrix::$(paths)"
+          echo "matrix=$(paths)" >> $GITHUB_OUTPUT
+
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+
+  # Lint Helm charts based on paths provided by previous job
+  lint:
+    needs: get_paths
+
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: [charts/abn, charts/autox, charts/iter8, charts/litmuschaos, charts/traffic]
+        version: ${{ fromJson(needs.get_paths.outputs.matrix) }}
+
     name: Test changed-files
     steps:
       - uses: actions/checkout@v3
