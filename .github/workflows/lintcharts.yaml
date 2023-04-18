@@ -24,7 +24,7 @@ jobs:
           # Serialize paths into JSON array
           paths=$(jq -ncR '[inputs]' <<< "$stringPaths")
 
-          # echo "::set-output name=matrix::$(paths)"
+          # Output serialized paths
           echo "matrix=$(paths)" >> $GITHUB_OUTPUT
 
     outputs:
