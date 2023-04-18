@@ -25,7 +25,7 @@ jobs:
           paths=$(jq -ncR '[inputs]' <<< "$stringPaths")
 
           # Output serialized paths
-          echo "matrix=$(paths)" >> $GITHUB_OUTPUT
+          echo "matrix=$paths" >> $GITHUB_OUTPUT
 
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
