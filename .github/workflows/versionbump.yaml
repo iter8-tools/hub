@@ -22,8 +22,8 @@ jobs:
           stringPaths=$(find -maxdepth 2 -path './charts/*')
 
           # Check paths (length greater than 0)
-          stringPathsLength=echo ${#stringPaths}
-          if  (( s == 0 ));
+          stringPathsLength=$(echo ${#stringPaths})
+          if (( stringPathsLength == 0 ));
           then
             echo "No paths to check"
             exit 1
