@@ -6,12 +6,38 @@ on:
       - main
 
 jobs:
-  build:
+  # Get the paths for the Helm charts to version check
+  get_paths:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Get the paths for Helm charts to version check
+        id: set-matrix
+        run: |
+          # Get paths (in string form)
+          stringPaths=$(find -maxdepth 2 -path './charts/*')
+
+          # Serialize paths into JSON array
+          paths=$(jq -ncR '[inputs]' <<< "$stringPaths")
+
+          # Output serialized paths
+          echo "matrix=$paths" >> $GITHUB_OUTPUT
+
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+
+  # Version check Helm charts based on paths provided by previous job
+  version_check:
+    name: Version check
+    needs: get_paths
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: [charts/abn, charts/autox, charts/iter8, charts/litmuschaos]
-    name: Test changed-files
+        version: ${{ fromJson(needs.get_paths.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -29,18 +55,16 @@ jobs:
           chartFile="${{ matrix.version }}/Chart.yaml"
 
           # Get git diff of the Chart.yaml between the main branch and PR branch
-          gitDiff=$(git diff origin/main..HEAD $chartFile)
+          gitDiff=$(git diff origin/main..HEAD -- $chartFile)
 
-          # Deletion and addition in Chart.yaml
-          delete=$'--- a/'
-          add=$'\n+++ b/'
-          deleteAddChart="$delete$chartFile$add$chartFile"
+          # Addition in Chart.yaml
+          add=$'+++ b/'
+          addChart="$add$chartFile"
 
-          # Deletion and addition of version in Chart.yaml
-          deleteVersion="-version:"
+          # Addition of version in Chart.yaml
           addVersion="+version:"
 
-          if [[ "$gitDiff" == *"$deleteAddChart"* ]] && [[ "$gitDiff" == *$deleteVersion* ]] && [[ "$gitDiff" == *$addVersion* ]]; 
+          if [[ "$gitDiff" == *"$addChart"* ]] && [[ "$gitDiff" == *$addVersion* ]]; 
           then
             echo "version in $chartFile has been modified"
           else
