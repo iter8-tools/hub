@@ -53,7 +53,11 @@ jobs:
       - name: Run step if any file(s) in the ${{ matrix.version }} folder was modified
         if: steps.modified-files.outputs.any_modified == 'true'
         run: |
-          chartFile="${{ matrix.version }}/Chart.yaml"
+          # Remove ./ prefix from raw matrix version (i.e. ./charts/iter8 -> charts/iter8)
+          version=$(echo ${{ matrix.version }} | sed s/".\/"//)
+
+          # Get chart file
+          chartFile="$version/Chart.yaml"
 
           # Get git diff of the Chart.yaml between the main branch and PR branch
           gitDiff=$(git diff origin/main..HEAD -- $chartFile)
