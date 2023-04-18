@@ -21,6 +21,14 @@ jobs:
           # Get paths (in string form)
           stringPaths=$(find -maxdepth 2 -path './charts/*')
 
+          # Check paths (length greater than 0)
+          stringPathsLength=echo ${#stringPaths}
+          if  (( s == 0 ));
+          then
+            echo "No paths to check"
+            exit 1
+          fi
+
           # Serialize paths into JSON array
           paths=$(jq -ncR '[inputs]' <<< "$stringPaths")
 
