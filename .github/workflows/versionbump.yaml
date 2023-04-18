@@ -23,6 +23,7 @@ jobs:
 
           # Serialize paths into JSON array
           paths=$(jq -ncR '[inputs]' <<< "$stringPaths")
+          echo $paths
 
           # Output serialized paths
           echo "matrix=$paths" >> $GITHUB_OUTPUT
@@ -56,13 +57,15 @@ jobs:
 
           # Get git diff of the Chart.yaml between the main branch and PR branch
           gitDiff=$(git diff origin/main..HEAD -- $chartFile)
+          echo $gitDiff
 
           # Addition in Chart.yaml
-          add=$'+++ b/'
-          addChart="$add$chartFile"
+          addChart="+++ b/$add$chartFile"
+          echo $addChart
 
           # Addition of version in Chart.yaml
           addVersion="+version:"
+          echo $addVersion
 
           if [[ "$gitDiff" == *"$addChart"* ]] && [[ "$gitDiff" == *$addVersion* ]]; 
           then
