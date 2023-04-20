@@ -7,9 +7,6 @@ jobs:
   kubernetes-http-experiment:
     name: Kubernetes http load test    
     runs-on: ubuntu-latest
-    needs: 
-    - build-and-push
-    - assets
     steps:    
     - name: Check out code into the Go module directory
       uses: actions/checkout@v3
