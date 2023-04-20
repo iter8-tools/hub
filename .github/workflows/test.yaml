@@ -1,11 +1,11 @@
-name: tests
+name: Tests
 
 on:
   pull_request:
 
 jobs:
   kubernetes-http-experiment:
-    name: Kubernetes http load test    
+    name: Kubernetes HTTP load test    
     runs-on: ubuntu-latest
     steps:    
     - name: Check out code into the Go module directory
@@ -18,7 +18,7 @@ jobs:
       with:
         wait: 300s
 
-    - name: create app
+    - name: Create app
       run: |
         kubectl create deployment httpbin --image=kennethreitz/httpbin
         kubectl expose deployment httpbin --type=ClusterIP --port=80
@@ -33,7 +33,7 @@ jobs:
         --set http.url="http://httpbin.default/get" \
         --set runner=job
 
-    - name: try other iter8 k commands
+    - name: Try other iter8 k commands
       run: |
         iter8 k assert -c completed -c nofailure --timeout 60s
         iter8 k report
