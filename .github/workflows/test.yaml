@@ -7,8 +7,6 @@ jobs:
   kubernetes-http-experiment:
     name: Kubernetes HTTP load test    
     runs-on: ubuntu-latest
-    env:
-      chart: charts/iter8
     strategy:
       matrix:
         version: 
@@ -25,13 +23,13 @@ jobs:
     - name: Check out code into the Go module directory
       uses: actions/checkout@v3
 
-    - name: Get modified files in the ${{ chart }} folder
+    - name: Get modified files in the charts/iter8 folder
       id: modified-files
       uses: tj-actions/changed-files@v35
       with:
-        files: $chart
+        files: charts/iter8
 
-    - name: Check modified files in the ${{ chart }} folder
+    - name: Check modified files in the charts/iter8 folder
       if: steps.modified-files.outputs.any_modified == 'false'
       run: exit 0
 
@@ -68,8 +66,6 @@ jobs:
   kubernetes-grpc-experiment:
     name: Kubernetes gRPC load test
     runs-on: ubuntu-latest
-    env:
-      chart: charts/iter8
     strategy:
       matrix:
         version:
@@ -86,13 +82,13 @@ jobs:
     - name: Check out code into the Go module directory
       uses: actions/checkout@v3
 
-    - name: Get modified files in the ${{ chart }} folder
+    - name: Get modified files in the charts/iter8 folder
       id: modified-files
       uses: tj-actions/changed-files@v35
       with:
-        files: $chart
+        files: charts/iter8
 
-    - name: Check modified files in the ${{ chart }} folder
+    - name: Check modified files in the charts/iter8 folder
       if: steps.modified-files.outputs.any_modified == 'false'
       run: exit 0
 
@@ -131,8 +127,6 @@ jobs:
   kubernetes-autox:
     name: Kubernetes Autox test
     runs-on: ubuntu-latest
-    env:
-      chart: charts/autox
     strategy:
       matrix:
         version:
@@ -149,13 +143,13 @@ jobs:
     - name: Check out code into the Go module directory
       uses: actions/checkout@v3
 
-    - name: Get modified files in the ${{ chart }} folder
+    - name: Get modified files in the charts/autox folder
       id: modified-files
       uses: tj-actions/changed-files@v35
       with:
-        files: $chart
+        files: charts/autox
 
-    - name: Check modified files in the ${{ chart }} folder
+    - name: Check modified files in the charts/autox folder
       if: steps.modified-files.outputs.any_modified == 'false'
       run: exit 0
 
