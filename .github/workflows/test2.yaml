@@ -4,18 +4,14 @@ on:
   pull_request:
 
 env:
-  FRUIT: 
-  - Apple
-  - Pear
-  - Banana
-  - Orange
+  FRUIT: '["hello", "world"]'
 
 jobs:
   ssql-get:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        FRUIT: ${ FRUIT }
+        FRUIT: fromJson( ${{ env.FRUITS }} )
     name: Get data
     steps:
       - run: echo ${ FRUIT }
