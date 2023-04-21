@@ -5,7 +5,7 @@ on:
 
 jobs:
   kubernetes-http-experiment:
-    name: Kubernetes HTTP load test    
+    name: HTTP load test    
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -65,7 +65,7 @@ jobs:
         iter8 k delete
       
   kubernetes-grpc-experiment:
-    name: Kubernetes gRPC load test
+    name: gRPC load test
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -127,7 +127,7 @@ jobs:
         iter8 k delete
 
   kubernetes-autox:
-    name: Kubernetes AutoX test
+    name: AutoX test
     runs-on: ubuntu-latest
     strategy:
       matrix:
