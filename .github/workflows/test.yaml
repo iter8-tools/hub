@@ -4,7 +4,7 @@ on:
   pull_request:
 
 jobs:
-  kubernetes-http-experiment:
+  http-experiment:
     name: HTTP load test
     runs-on: ubuntu-latest
     strategy:
@@ -64,7 +64,7 @@ jobs:
         iter8 k log
         iter8 k delete
       
-  kubernetes-grpc-experiment:
+  grpc-experiment:
     name: gRPC load test
     runs-on: ubuntu-latest
     strategy:
@@ -126,7 +126,7 @@ jobs:
         iter8 k log
         iter8 k delete
 
-  kubernetes-autox:
+  autox:
     name: AutoX test
     runs-on: ubuntu-latest
     strategy:
