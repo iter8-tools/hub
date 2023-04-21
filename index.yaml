@@ -161,6 +161,25 @@ entries:
     version: 0.1.0
   iter8:
   - apiVersion: v2
+    created: "2023-04-21T17:23:43.786977206Z"
+    description: Iter8 experiment chart
+    digest: 1ffee39e3715626cc3b1cef4dd9088d40ac624bfb244767204a33027725f8856
+    home: https://iter8.tools
+    icon: https://github.com/iter8-tools/iter8/raw/master/mkdocs/docs/images/favicon.png
+    maintainers:
+    - email: spartha@us.ibm.com
+      name: Srinivasan Parthasarathy
+      url: https://researcher.watson.ibm.com/researcher/view.php?person=us-spartha
+    - email: kalantar@us.ibm.com
+      name: Michael Kalantar
+    name: iter8
+    sources:
+    - https://github.com/iter8-tools/hub
+    type: application
+    urls:
+    - https://github.com/iter8-tools/hub/releases/download/iter8-0.13.7/iter8-0.13.7.tgz
+    version: 0.13.7
+  - apiVersion: v2
     created: "2023-04-11T13:41:16.689043102Z"
     description: Iter8 experiment chart
     digest: 82c06eded822e2ac79f516895e0367cc000a5c10a29a14eb81fc1f0c6cdd944f
@@ -1014,4 +1033,4 @@ entries:
     urls:
     - https://github.com/iter8-tools/hub/releases/download/traffic-0.1.0/traffic-0.1.0.tgz
     version: 0.1.0
-generated: "2023-04-19T13:45:11.076020302Z"
+generated: "2023-04-21T17:23:43.787277109Z"
