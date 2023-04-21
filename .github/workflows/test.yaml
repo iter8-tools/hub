@@ -55,7 +55,7 @@ jobs:
       with:
         wait: 300s
 
-    - name: Xreate app
+    - name: Create app
       run: |
         kubectl create deploy hello --image=docker.io/grpc/java-example-hostname:latest --port=50051
         kubectl expose deploy hello --port=50051
@@ -78,3 +78,43 @@ jobs:
         iter8 k report
         iter8 k log
         iter8 k delete
+
+  kubernetes-autox:
+    name: Kubernetes autox test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v3
+
+    - uses: iter8-tools/iter8@v0.13
+
+    - name: Start kind cluster
+      uses: helm/kind-action@v1.5.0
+      with:
+        wait: 300s
+
+    - name: Create namespace
+      run: |
+        kubectl create namespace argocd
+        
+    - name: Start AutoX controller
+      run: |
+        helm install autox charts/autox \
+        --set 'groups.httpbin.trigger.name=httpbin' \
+        --set 'groups.httpbin.trigger.namespace=default' \
+        --set 'groups.httpbin.trigger.group=apps' \
+        --set 'groups.httpbin.trigger.version=v1' \
+        --set 'groups.httpbin.trigger.resource=deployments' \
+        --set 'groups.httpbin.specs.iter8.name=iter8' \
+        --set 'groups.httpbin.specs.iter8.values.tasks={ready,http,assess}' \
+        --set 'groups.httpbin.specs.iter8.values.ready.deploy=httpbin' \
+        --set 'groups.httpbin.specs.iter8.values.ready.service=httpbin' \
+        --set 'groups.httpbin.specs.iter8.values.ready.timeout=60s' \
+        --set 'groups.httpbin.specs.iter8.values.http.url=http://httpbin.default/get' \
+        --set 'groups.httpbin.specs.iter8.values.assess.SLOs.upper.http/error-count=0' \
+        --set 'groups.httpbin.specs.iter8.values.assess.SLOs.upper.http/latency-mean=50' \
+        --set 'groups.httpbin.specs.iter8.version=0.13.0' \
+        --set 'groups.httpbin.specs.iter8.values.runner=job'
+
+    - name: Check AutoX controller
+      run: kubectl wait --for=condition=available --timeout=60s deploy/autox -n argocd
