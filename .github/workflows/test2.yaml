@@ -12,4 +12,4 @@ jobs:
     name: Get data
     steps:
       - run: echo $FRUIT
-      - run: echo ${{ fromJson(env.FRUITS) }}
+      - run: echo ${{ fromJson(env.FRUIT) }}
