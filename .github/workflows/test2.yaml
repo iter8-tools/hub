@@ -1,0 +1,17 @@
+name: Test experiment charts
+
+on:
+  pull_request:
+
+env:
+  FRUIT: ["Apple", "Pear", "Banana", "Orange"]
+
+jobs:
+  ssql-get:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        FRUIT: ${{ env.FRUIT }}
+    name: Get data
+    steps:
+      - run: echo ${FRUIT}
