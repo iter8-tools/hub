@@ -40,3 +40,41 @@ jobs:
         iter8 k report
         iter8 k log
         iter8 k delete
+      
+  kubernetes-grpc-experiment:
+    name: Kubernetes gRPC load test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v3
+
+    - uses: iter8-tools/iter8@v0.13
+
+    - name: Start kind cluster
+      uses: helm/kind-action@v1.5.0
+      with:
+        wait: 300s
+
+    - name: Xreate app
+      run: |
+        kubectl create deploy hello --image=docker.io/grpc/java-example-hostname:latest --port=50051
+        kubectl expose deploy hello --port=50051
+        kubectl wait --for=condition=available --timeout=60s deploy/hello
+        
+    - name: iter8 k launch
+      run: |
+        iter8 k launch \
+        --localChart \
+        --chartName charts/iter8 \
+        --set tasks={grpc} \
+        --set grpc.host="hello.default:50051" \
+        --set grpc.call="helloworld.Greeter.SayHello" \
+        --set grpc.protoURL="https://raw.githubusercontent.com/grpc/grpc-go/master/examples/helloworld/helloworld/helloworld.proto" \
+        --set runner=job
+
+    - name: try other iter8 k commands
+      run: |
+        iter8 k assert -c completed -c nofailure --timeout 60s
+        iter8 k report
+        iter8 k log
+        iter8 k delete
