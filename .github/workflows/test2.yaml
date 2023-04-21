@@ -9,9 +9,7 @@ env:
 jobs:
   ssql-get:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        FRUIT: fromJson( ${{ env.FRUITS }} )
     name: Get data
     steps:
       - run: echo ${ FRUIT }
+      - run: fromJson( ${{ env.FRUITS }} )
