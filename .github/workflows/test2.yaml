@@ -1,4 +1,4 @@
-name: Test experiment charts
+name: Test matrix
 
 on:
   pull_request:
@@ -9,7 +9,9 @@ env:
 jobs:
   ssql-get:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: ${{ fromJson(env.FRUIT) }}
     name: Get data
     steps:
-      - run: echo $FRUIT
-      - run: echo ${{ fromJson(env.FRUIT) }}
+      - run: echo ${{ matrix.version }}
