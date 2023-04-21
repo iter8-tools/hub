@@ -125,7 +125,7 @@ jobs:
 
     - uses: iter8-tools/iter8@v0.13
 
-   - name: Start kind cluster ${{ matrix.version }}
+    - name: Start kind cluster ${{ matrix.version }}
       uses: helm/kind-action@v1.5.0
       with:
         wait: 300s
