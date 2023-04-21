@@ -27,7 +27,6 @@ spec:
         resources:
           {{ toYaml .Values.resources | indent 10 | trim }}
         securityContext:
-          readOnlyRootFilesystem: true
           runAsNonRoot: true
           runAsUser: 1000
       restartPolicy: Never

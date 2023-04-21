@@ -72,7 +72,7 @@ jobs:
         --set grpc.protoURL="https://raw.githubusercontent.com/grpc/grpc-go/master/examples/helloworld/helloworld/helloworld.proto" \
         --set runner=job
 
-    - name: try other iter8 k commands
+    - name: Try other iter8 k commands
       run: |
         iter8 k assert -c completed -c nofailure --timeout 60s
         iter8 k report
