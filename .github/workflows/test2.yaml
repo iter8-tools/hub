@@ -11,5 +11,5 @@ jobs:
     runs-on: ubuntu-latest
     name: Get data
     steps:
-      - run: echo ${ FRUIT }
+      - run: echo $FRUIT
       - run: fromJson( ${{ env.FRUITS }} )
