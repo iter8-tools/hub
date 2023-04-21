@@ -20,7 +20,7 @@ jobs:
         - kindest/node:v1.27.0@sha256:c6b22e613523b1af67d4bc8a0c38a4c3ea3a2b8fbc5b367ae36345c9cb844518
 
     steps:    
-    - name: Check out code into the Go module directory
+    - name: Check out code
       uses: actions/checkout@v3
 
     - name: Get modified files in the charts/iter8 folder
@@ -80,7 +80,7 @@ jobs:
         - kindest/node:v1.27.0@sha256:c6b22e613523b1af67d4bc8a0c38a4c3ea3a2b8fbc5b367ae36345c9cb844518
 
     steps:
-    - name: Check out code into the Go module directory
+    - name: Check out code
       uses: actions/checkout@v3
 
     - name: Get modified files in the charts/iter8 folder
@@ -142,7 +142,7 @@ jobs:
         - kindest/node:v1.27.0@sha256:c6b22e613523b1af67d4bc8a0c38a4c3ea3a2b8fbc5b367ae36345c9cb844518
 
     steps:
-    - name: Check out code into the Go module directory
+    - name: Check out code
       uses: actions/checkout@v3
 
     - name: Get modified files in the charts/autox folder
