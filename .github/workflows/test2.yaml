@@ -27,10 +27,8 @@ jobs:
           jsonVersions=$(jq -ncR '[inputs]' <<< "$versions")
           echo $jsonVersions
 
-          echo $jsonVersions | sed -e "s/,\"\"//"
-
           # Output serialized jsonVersions
-          echo "matrix=$jsonVersions" >> $GITHUB_OUTPUT
+          echo "matrix=$jsonVersions" | sed -e "s/,\"\"//" >> $GITHUB_OUTPUT
 
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
