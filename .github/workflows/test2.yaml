@@ -24,7 +24,7 @@ jobs:
         id: set-matrix
         run: |
           # Serialize versions into JSON array
-          jsonVersions=$(jq -ncR '[inputs]' <<< "$versions")
+          jsonVersions=$(echo $versions | jq -ncR '[inputs]' | sed -e "s/,\"\"//")
           echo $jsonVersions
 
           # Output serialized jsonVersions
