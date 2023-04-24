@@ -200,7 +200,7 @@ jobs:
         iter8 k log
         iter8 k delete
 
-grpc-looped-experiment:
+  grpc-looped-experiment:
     name: gRPC looped load test
     needs: get_versions
     runs-on: ubuntu-latest
