@@ -1,0 +1,43 @@
+name: Additional Helm chart linting
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  http-experiment:
+    name: HTTP load test
+    runs-on: ubuntu-latest
+
+    steps:    
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    - name: Get modified files in the charts/iter8 folder
+      id: modified-files
+      uses: tj-actions/changed-files@v35
+      with:
+        files: charts/iter8
+
+    - uses: azure/setup-helm@v3
+      if: steps.modified-files.outputs.any_modified == 'true'
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Create Kubernetes YAML files
+      if: steps.modified-files.outputs.any_modified == 'true'
+      run: |
+        helm template charts/iter8 --set "tasks={ready,http,assess}" \
+        --set ready.deploy=httpbin \
+        --set ready.service=httpbin \
+        --set ready.timeout=60s \
+        --set http.url=http://httpbin.default/get \
+        --set assess.SLOs.upper.http/latency-mean=50 \
+        --set assess.SLOs.upper.http/error-count=0 \
+        --set runner=job >> iter8.yaml
+
+    - name: Lint Kubernetes YAML files
+      uses: stackrox/kube-linter-action@v1
+      with:
+        directory: iter8.yaml
