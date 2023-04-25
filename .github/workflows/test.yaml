@@ -142,9 +142,65 @@ jobs:
         iter8 k report
         iter8 k log
         iter8 k delete
-      
+
   grpc-experiment:
     name: gRPC load test
+    needs: get_versions
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: ${{ fromJson(needs.get_versions.outputs.matrix) }}
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    - name: Get modified files in the charts/iter8 folder
+      id: modified-files
+      uses: tj-actions/changed-files@v35
+      with:
+        files: charts/iter8
+    
+    - uses: iter8-tools/iter8@v0.13
+      if: steps.modified-files.outputs.any_modified == 'true'
+
+    - name: Start kind cluster ${{ matrix.version }}
+      uses: helm/kind-action@v1.5.0
+      if: steps.modified-files.outputs.any_modified == 'true'
+      with:
+        wait: 300s
+        node_image: ${{ matrix.version }}
+
+    - name: Create app
+      if: steps.modified-files.outputs.any_modified == 'true'
+      run: |
+        kubectl create deploy hello --image=docker.io/grpc/java-example-hostname:latest --port=50051
+        kubectl expose deploy hello --port=50051
+        kubectl wait --for=condition=available --timeout=60s deploy/hello
+        
+    - name: iter8 k launch
+      if: steps.modified-files.outputs.any_modified == 'true'
+      run: |
+        iter8 k launch \
+        --localChart \
+        --chartName charts/iter8 \
+        --set tasks={grpc} \
+        --set grpc.host="hello.default:50051" \
+        --set grpc.call="helloworld.Greeter.SayHello" \
+        --set grpc.protoURL="https://raw.githubusercontent.com/grpc/grpc-go/master/examples/helloworld/helloworld/helloworld.proto" \
+        --set runner=job
+
+    - name: Try other iter8 k commands
+      if: steps.modified-files.outputs.any_modified == 'true'
+      run: |
+        iter8 k assert -c completed -c nofailure --timeout 60s
+        iter8 k report
+        iter8 k log
+        iter8 k delete
+
+
+  grpc-looped-experiment:
+    name: gRPC looped load test
     needs: get_versions
     runs-on: ubuntu-latest
     strategy:
@@ -196,61 +252,6 @@ jobs:
       run: |
         sleep 60
         iter8 k assert -c nofailure --timeout 60s
-        iter8 k report
-        iter8 k log
-        iter8 k delete
-
-  grpc-looped-experiment:
-    name: gRPC looped load test
-    needs: get_versions
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        version: ${{ fromJson(needs.get_versions.outputs.matrix) }}
-
-    steps:
-    - name: Check out code
-      uses: actions/checkout@v3
-
-    - name: Get modified files in the charts/iter8 folder
-      id: modified-files
-      uses: tj-actions/changed-files@v35
-      with:
-        files: charts/iter8
-    
-    - uses: iter8-tools/iter8@v0.13
-      if: steps.modified-files.outputs.any_modified == 'true'
-
-    - name: Start kind cluster ${{ matrix.version }}
-      uses: helm/kind-action@v1.5.0
-      if: steps.modified-files.outputs.any_modified == 'true'
-      with:
-        wait: 300s
-        node_image: ${{ matrix.version }}
-
-    - name: Create app
-      if: steps.modified-files.outputs.any_modified == 'true'
-      run: |
-        kubectl create deploy hello --image=docker.io/grpc/java-example-hostname:latest --port=50051
-        kubectl expose deploy hello --port=50051
-        kubectl wait --for=condition=available --timeout=60s deploy/hello
-        
-    - name: iter8 k launch
-      if: steps.modified-files.outputs.any_modified == 'true'
-      run: |
-        iter8 k launch \
-        --localChart \
-        --chartName charts/iter8 \
-        --set tasks={grpc} \
-        --set grpc.host="hello.default:50051" \
-        --set grpc.call="helloworld.Greeter.SayHello" \
-        --set grpc.protoURL="https://raw.githubusercontent.com/grpc/grpc-go/master/examples/helloworld/helloworld/helloworld.proto" \
-        --set runner=job
-
-    - name: Try other iter8 k commands
-      if: steps.modified-files.outputs.any_modified == 'true'
-      run: |
-        iter8 k assert -c completed -c nofailure --timeout 60s
         iter8 k report
         iter8 k log
         iter8 k delete
