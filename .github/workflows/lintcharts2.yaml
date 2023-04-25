@@ -1,4 +1,8 @@
 name: Additional Helm chart linting
+# Like lintcharts.yaml, the other lint Helm chart workflow, this workflow uses kube-linter
+# kube-linter checks Helm templates but it does not check what is contained in {{ define ... }} blocks
+# This workflow builds on the other workflow by producing Kubernetes YAML files from the templates and running kube-linter on those files
+# See iter8-tools/iter8#1452
 
 on:
   pull_request:
