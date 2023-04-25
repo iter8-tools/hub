@@ -113,7 +113,7 @@ jobs:
       with:
         directory: iter8.yaml
 
-  grpc-experiment:
+  grpc-looped-experiment:
     name: Lint gRPC looped experiment
     runs-on: ubuntu-latest
 
