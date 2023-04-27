@@ -71,7 +71,7 @@ jobs:
     - name: Check traffic
       if: steps.modified-files.outputs.any_modified == 'true'
       run: |
-        kubectl rollout status --watch --timeout=60s statefulset.apps/traffic
+        kubectl rollout status --watch --timeout=60s statefulset.apps/iter8-traffic
 
   traffic-clusterScoped:
     name: Traffic test
@@ -109,4 +109,4 @@ jobs:
     - name: Check traffic
       if: steps.modified-files.outputs.any_modified == 'true'
       run: |
-        kubectl rollout status --watch --timeout=60s statefulset.apps/traffic
+        kubectl rollout status --watch --timeout=60s statefulset.apps/iter8-traffic
