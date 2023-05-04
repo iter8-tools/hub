@@ -1102,4 +1102,30 @@ entries:
     urls:
     - https://github.com/iter8-tools/hub/releases/download/traffic-0.1.0/traffic-0.1.0.tgz
     version: 0.1.0
-generated: "2023-05-03T15:07:30.389244776Z"
+  traffic-templates:
+  - apiVersion: v2
+    appVersion: v0.13
+    created: "2023-05-04T13:55:01.674947213Z"
+    description: Iter8 traffic templates
+    digest: e84c0580332f8016afd297cd9a3f3c1527046b65fa5809f22d826e3bbc5bf62f
+    home: https://iter8.tools
+    icon: https://github.com/iter8-tools/iter8/raw/master/mkdocs/docs/images/favicon.png
+    keywords:
+    - Iter8
+    - traffic
+    - blue-green
+    - canary
+    - mirroring
+    maintainers:
+    - email: kalantar@us.ibm.com
+      name: Michael Kalantar
+    - email: iter8-tools@gmail.com
+      name: Iter8
+    name: traffic-templates
+    sources:
+    - https://github.com/iter8-tools/iter8
+    type: application
+    urls:
+    - https://github.com/iter8-tools/hub/releases/download/traffic-templates-0.1.0/traffic-templates-0.1.0.tgz
+    version: 0.1.0
+generated: "2023-05-04T13:55:01.675048514Z"
