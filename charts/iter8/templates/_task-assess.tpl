@@ -26,13 +26,13 @@
 {{- if .rewards.max }}
       max:
 {{- range $r, $val := .rewards.max }}
-      - {{ $r }}
+      - {{ $val }}
 {{- end }}
 {{- end }}
 {{- if .rewards.min }}
       min:
 {{- range $r, $val := .rewards.min }}
-      - {{ $r }}
+      - {{ $val }}
 {{- end }}
 {{- end }}
 {{- end }}
