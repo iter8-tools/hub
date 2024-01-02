@@ -20,7 +20,7 @@ jobs:
 
     - name: Get modified files in the charts/iter8 folder
       id: modified-files
-      uses: tj-actions/changed-files@v35
+      uses: tj-actions/changed-files@v41
       with:
         files: charts/iter8
 
@@ -58,7 +58,7 @@ jobs:
 
     - name: Get modified files in the charts/iter8 folder
       id: modified-files
-      uses: tj-actions/changed-files@v35
+      uses: tj-actions/changed-files@v41
       with:
         files: charts/iter8
 
@@ -92,7 +92,7 @@ jobs:
 
     - name: Get modified files in the charts/iter8 folder
       id: modified-files
-      uses: tj-actions/changed-files@v35
+      uses: tj-actions/changed-files@v41
       with:
         files: charts/iter8
 
@@ -127,7 +127,7 @@ jobs:
 
     - name: Get modified files in the charts/iter8 folder
       id: modified-files
-      uses: tj-actions/changed-files@v35
+      uses: tj-actions/changed-files@v41
       with:
         files: charts/iter8
 
@@ -163,7 +163,7 @@ jobs:
 
     - name: Get modified files in the charts/traffic-templates folder
       id: modified-files
-      uses: tj-actions/changed-files@v35
+      uses: tj-actions/changed-files@v41
       with:
         files: charts/traffic-templates
 
@@ -197,7 +197,7 @@ jobs:
 
     - name: Get modified files in the charts/traffic-templates folder
       id: modified-files
-      uses: tj-actions/changed-files@v35
+      uses: tj-actions/changed-files@v41
       with:
         files: charts/traffic-templates
 
@@ -231,7 +231,7 @@ jobs:
 
     - name: Get modified files in the charts/traffic-templates folder
       id: modified-files
-      uses: tj-actions/changed-files@v35
+      uses: tj-actions/changed-files@v41
       with:
         files: charts/traffic-templates
 
@@ -265,7 +265,7 @@ jobs:
 
     - name: Get modified files in the charts/traffic-templates folder
       id: modified-files
-      uses: tj-actions/changed-files@v35
+      uses: tj-actions/changed-files@v41
       with:
         files: charts/traffic-templates
 
@@ -301,7 +301,7 @@ jobs:
 
     - name: Get modified files in the charts/traffic-templates folder
       id: modified-files
-      uses: tj-actions/changed-files@v35
+      uses: tj-actions/changed-files@v41
       with:
         files: charts/traffic-templates
 
